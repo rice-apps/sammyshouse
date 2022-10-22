@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const routes = require('./routes/routes');
 
 const mongoString = process.env.DATABASE_URL;
+const mongoPassword = process.env.DATABASE_PASSWORD;
+
+mongoString.replace('<password>', mongoPassword);
 
 // Connect to database
 mongoose.connect(mongoString);
