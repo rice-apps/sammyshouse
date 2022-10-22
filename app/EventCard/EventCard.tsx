@@ -1,3 +1,4 @@
+import { useFonts } from 'expo-font';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import EventData from './EventData';
@@ -38,16 +39,25 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     bold: {
-        fontWeight: 'bold'
+        fontFamily: 'InterBold'
     },
     inter: {
-        fontFamily: 'inter'
+        fontFamily: 'Inter'
     }
 });
 
 const EventCard = (props: {
     data: EventData,
 }) => {
+    const [fontsLoaded] = useFonts({
+        Inter: require('../assets/fonts/Inter-Regular.otf'),
+        InterBold: require('../assets/fonts/Inter-Bold.otf')
+    });
+
+    if (!fontsLoaded) {
+        return null;
+    }
+
     const month: string = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(props.data.dateTime);
     const weekday: string = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(props.data.dateTime).toUpperCase();
     const dayOfMonth: string = props.data.dateTime.getDate().toString();
@@ -66,22 +76,22 @@ const EventCard = (props: {
                 <View>
                     <Image source={{ uri: props.data.imageURI }} style={styles.mainImage} />
                     <View style={styles.info}>
-                        <Text style={[styles.inter, styles.bold, styles.big]}>{props.data.eventName}</Text>
-                        <Text>{props.data.postedBy}</Text>
+                        <Text style={[styles.bold, styles.big]}>{props.data.eventName}</Text>
+                        <Text style={styles.inter}>{props.data.postedBy}</Text>
                         <View>
                             {/*<Image source={} style={styles.icon}/>*/}
-                            <Text>{time}</Text>
+                            <Text style={styles.inter}>{time}</Text>
                         </View>
                         <View>
                             {/*<Image source={require('@expo/snack-static/react-native-logo.png')} style={styles.icon}/>*/}
-                            <Text>{props.data.location}</Text>
+                            <Text style={styles.inter}>{props.data.location}</Text>
                         </View>
                     </View>
                 </View>
                 <View style={styles.dateInfo}>
                     <View style={{alignItems: 'flex-end'}}>
-                        <Text>{month}</Text>
-                        <Text style={styles.big}>{dayOfMonth}</Text>
+                        <Text style={styles.inter}>{month}</Text>
+                        <Text style={[styles.inter, styles.big]}>{dayOfMonth}</Text>
                     </View>
                     <Text style={styles.bold}>{weekday}</Text>
                 </View>
