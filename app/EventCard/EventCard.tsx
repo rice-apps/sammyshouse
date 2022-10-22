@@ -1,6 +1,8 @@
 import React from 'react';
 import EventData from './EventData';
 
+const defaultImageURI: string = 'https://brand.rice.edu/sites/g/files/bxs2591/files/2019-08/190308_Rice_Mechanical_Brand_Standards_Logos-2.png';
+
 const EventCard = (props: {
     data: EventData,
 }) => {
@@ -11,6 +13,10 @@ const EventCard = (props: {
         hour: '2-digit',
         minute: '2-digit'
     });
+
+    if (props.data.imageURI == undefined) {
+        props.data.imageURI = defaultImageURI;
+    }
 };
 
 export default EventCard;

@@ -2,8 +2,8 @@ interface EventData {
     eventName: string,
     postedBy: string,
     location: string,
-    imageURI: string,
-    dateTime: Date
+    dateTime: Date,
+    imageURI?: string
 }
 
 export default EventData;
