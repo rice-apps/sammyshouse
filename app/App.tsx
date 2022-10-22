@@ -1,12 +1,19 @@
 import React from 'react';
+import {Routes, Route, useNavigate} from 'react-router-dom'; 
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { ApolloServerPluginLandingPageDisabled } from 'apollo-server-core';
+import eventPage from './eventPage';
 
 export default function App() {
+  const navigate = useNavigate();
+  const navigateToEventPage = () => {
+    navigate('./eventPage'); 
+  } 
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <button onClick = {navigateToEventPage}>Event Page</button>
     </View>
   );
 }
