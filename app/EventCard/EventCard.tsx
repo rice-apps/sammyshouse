@@ -15,9 +15,15 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     inner: {
+        width: "90%",
+        height: "90%",
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+    },
+    leftSide: {
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     info: {
         flexDirection: 'column',
@@ -30,7 +36,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     mainImage: {
-
+        width: 106,
+        height: 90
     },
     icon: {
 
@@ -73,7 +80,7 @@ const EventCard = (props: {
     return (
         <View style={styles.card}>
             <View style={styles.inner}>
-                <View>
+                <View style={styles.leftSide}>
                     <Image source={{ uri: props.data.imageURI }} style={styles.mainImage} />
                     <View style={styles.info}>
                         <Text style={[styles.bold, styles.big]}>{props.data.eventName}</Text>
@@ -90,10 +97,11 @@ const EventCard = (props: {
                 </View>
                 <View style={styles.dateInfo}>
                     <View style={{alignItems: 'flex-end'}}>
+                        <Text style={styles.bold}>{weekday}</Text>
                         <Text style={styles.inter}>{month}</Text>
                         <Text style={[styles.inter, styles.big]}>{dayOfMonth}</Text>
                     </View>
-                    <Text style={styles.bold}>{weekday}</Text>
+                    {/*<Image source={}/ style={styles.icon}>*/}
                 </View>
             </View>
         </View>
