@@ -7,7 +7,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <EventCard data={{
-        eventName: 'Test Event',
+        eventName: 'Event',
         postedBy: 'Carson Foster',
         location: 'Lilie Lab',
         dateTime: new Date('15 December 2022 1:48 PM')

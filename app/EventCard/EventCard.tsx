@@ -7,13 +7,41 @@ const defaultImageURI: string = 'https://brand.rice.edu/sites/g/files/bxs2591/fi
 const styles = StyleSheet.create({
     card: {
         backgroundColor: 'white',
-        borderRadius: 10
+        borderRadius: 10,
+        width: '90%',
+        height: '15%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    inner: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    info: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start'
+    },
+    dateInfo: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end'
     },
     mainImage: {
 
     },
     icon: {
 
+    },
+    big: {
+        fontSize: 18,
+    },
+    bold: {
+        fontWeight: 'bold'
+    },
+    inter: {
+        fontFamily: 'inter'
     }
 });
 
@@ -34,23 +62,29 @@ const EventCard = (props: {
 
     return (
         <View style={styles.card}>
-            <Image source={{ uri: props.data.imageURI }} style={styles.mainImage} />
-            <View>
-                <Text>{props.data.eventName}</Text>
-                <Text>{props.data.postedBy}</Text>
+            <View style={styles.inner}>
                 <View>
-                    {/*<Image source={} style={styles.icon}/>*/}
-                    <Text>{time}</Text>
+                    <Image source={{ uri: props.data.imageURI }} style={styles.mainImage} />
+                    <View style={styles.info}>
+                        <Text style={[styles.inter, styles.bold, styles.big]}>{props.data.eventName}</Text>
+                        <Text>{props.data.postedBy}</Text>
+                        <View>
+                            {/*<Image source={} style={styles.icon}/>*/}
+                            <Text>{time}</Text>
+                        </View>
+                        <View>
+                            {/*<Image source={require('@expo/snack-static/react-native-logo.png')} style={styles.icon}/>*/}
+                            <Text>{props.data.location}</Text>
+                        </View>
+                    </View>
                 </View>
-                <View>
-                    {/*<Image source={require('@expo/snack-static/react-native-logo.png')} style={styles.icon}/>*/}
-                    <Text>{props.data.location}</Text>
+                <View style={styles.dateInfo}>
+                    <View style={{alignItems: 'flex-end'}}>
+                        <Text>{month}</Text>
+                        <Text style={styles.big}>{dayOfMonth}</Text>
+                    </View>
+                    <Text style={styles.bold}>{weekday}</Text>
                 </View>
-            </View>
-            <View>
-                <Text>{month}</Text>
-                <Text>{dayOfMonth}</Text>
-                <Text>{weekday}</Text>
             </View>
         </View>
     );
