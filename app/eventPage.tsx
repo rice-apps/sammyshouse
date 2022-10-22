@@ -1,21 +1,17 @@
 import React from 'react';
-import '/eventPage.css'; 
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { ApolloServerPluginLandingPageDisabled } from 'apollo-server-core';
 
-const imageToAdd = require( "../allendong/FZVRfKEXoAQTH8U.jpg");
+//const imageToAdd = require( "../allendong/FZVRfKEXoAQTH8U.jpg");
 
-export default function eventPage() {
+export default function EventPage() {
   return ( <View>
-    // styling later. Fields are just placeholder, will import them later
-
-    <img src = {imageToAdd} alt = "Image" />
     <Text>
-        <Text className="eventName">Event Name</Text> <br/>
-        <Text className="eventdetail">Host Name </Text> <br/>
-        <Text className="eventdetail">Day, Date, and Time</Text> <br/>
-        <Text className="eventdetail">Location</Text>
+        <Text className="eventName">Event Name</Text> 
+        <Text classrame="eventdetail">Host Name </Text> 
+        <Text className="eventdetail">Day, Date, and Time</Text>
+        <Text classrName="eventdetail">Location</Text>
     </Text>
     </View>
   );
