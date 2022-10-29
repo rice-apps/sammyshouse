@@ -1,4 +1,5 @@
 import { useFonts } from 'expo-font';
+import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import EventData from './EventData';
@@ -50,6 +51,9 @@ const styles = StyleSheet.create({
     },
     inter: {
         fontFamily: 'Inter'
+    },
+    row: {
+        flexDirection: 'row'
     }
 });
 
@@ -84,13 +88,15 @@ const EventCard = (props: {
                     <Image source={{ uri: props.data.imageURI }} style={styles.mainImage} />
                     <View style={styles.info}>
                         <Text style={[styles.bold, styles.big]}>{props.data.eventName}</Text>
-                        <Text style={styles.inter}>{props.data.postedBy}</Text>
-                        <View>
-                            {/*<Image source={} style={styles.icon}/>*/}
+                        <View style={styles.row}>
+                            <Text style={styles.inter}>by </Text>
+                            <Text style={styles.bold}>{props.data.postedBy}</Text>
+                        </View>
+                        <View style={styles.row}>
+                            <FontAwesome5 name="clock" size={15} color="black" />
                             <Text style={styles.inter}>{time}</Text>
                         </View>
                         <View>
-                            {/*<Image source={require('@expo/snack-static/react-native-logo.png')} style={styles.icon}/>*/}
                             <Text style={styles.inter}>{props.data.location}</Text>
                         </View>
                     </View>
@@ -101,7 +107,6 @@ const EventCard = (props: {
                         <Text style={styles.inter}>{month}</Text>
                         <Text style={[styles.inter, styles.big]}>{dayOfMonth}</Text>
                     </View>
-                    {/*<Image source={}/ style={styles.icon}>*/}
                 </View>
             </View>
         </View>
