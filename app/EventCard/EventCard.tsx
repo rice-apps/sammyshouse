@@ -23,10 +23,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     leftSide: {
+        height: '90%',
         flexDirection: 'row',
         alignItems: 'center'
     },
     info: {
+        height: '80%',
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'flex-start'
@@ -64,7 +66,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignContent: 'flex-end',
         justifyContent: 'space-between',
-        height: '100%'
+        height: '72%'
     }
 });
 
@@ -98,18 +100,22 @@ const EventCard = (props: {
                 <View style={styles.leftSide}>
                     {mainImage}
                     <View style={styles.info}>
-                        <Text style={[styles.bold, styles.big]}>{props.data.eventName}</Text>
-                        <View style={styles.row}>
-                            <Text style={styles.inter}>by </Text>
-                            <Text style={styles.bold}>{props.data.postedBy}</Text>
+                        <View style={{width: '100%', height: '40%', justifyContent: 'space-between'}}>
+                            <Text style={[styles.bold, styles.big]}>{props.data.eventName}</Text>
+                            <View style={styles.row}>
+                                <Text style={styles.inter}>by </Text>
+                                <Text style={styles.bold}>{props.data.postedBy}</Text>
+                            </View>
                         </View>
-                        <View style={styles.iconGroup}>
-                            <FontAwesome5 name="clock" size={15} color="black" style={styles.marginRight}/>
-                            <Text style={styles.inter}>{time}</Text>
-                        </View>
-                        <View style={styles.iconGroup}>
-                            <Ionicons name="location-sharp" size={15} color="black" style={styles.marginRight}/>
-                            <Text style={styles.inter}>{props.data.location}</Text>
+                        <View style={{width:'100%', height: '35%', justifyContent: 'space-between'}}>
+                            <View style={styles.iconGroup}>
+                                <FontAwesome5 name="clock" size={15} color="black" style={styles.marginRight}/>
+                                <Text style={styles.inter}>{time}</Text>
+                            </View>
+                            <View style={styles.iconGroup}>
+                                <Ionicons name="location-sharp" size={15} color="black" style={styles.marginRight}/>
+                                <Text style={styles.inter}>{props.data.location}</Text>
+                            </View>
                         </View>
                     </View>
                 </View>
