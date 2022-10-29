@@ -1,7 +1,7 @@
 import { useFonts } from 'expo-font';
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import EventData from './EventData';
 
 const defaultImageURI: string = 'https://brand.rice.edu/sites/g/files/bxs2591/files/2019-08/190308_Rice_Mechanical_Brand_Standards_Logos-2.png';
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
 
 const EventCard = (props: {
     data: EventData,
+    onPress: () => void
 }) => {
     const [fontsLoaded] = useFonts({
         Inter: require('../assets/fonts/Inter-Regular.otf'),
@@ -95,7 +96,7 @@ const EventCard = (props: {
     : (<Image source={{ uri: props.data.imageURI }} style={styles.mainImage} />));
 
     return (
-        <View style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={props.onPress}>
             <View style={styles.inner}>
                 <View style={styles.leftSide}>
                     {mainImage}
@@ -130,7 +131,7 @@ const EventCard = (props: {
                     <FontAwesome5 name="heart" size={20} color="black" style={{textAlign: 'right'}}/>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 
