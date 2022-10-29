@@ -11,7 +11,7 @@ export default function App() {
         postedBy: 'Carson Foster',
         location: 'Lilie Lab',
         dateTime: new Date('15 December 2022 1:48 PM')
-      }} />
+      }} onPress={() => console.log("pressed")}/>
       <StatusBar style="auto" />
     </View>
   );

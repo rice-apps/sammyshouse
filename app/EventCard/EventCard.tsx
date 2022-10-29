@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
 
 const EventCard = (props: {
     data: EventData,
-    onPress: () => void
+    onPress?: () => void
 }) => {
     const [fontsLoaded] = useFonts({
         Inter: require('../assets/fonts/Inter-Regular.otf'),
