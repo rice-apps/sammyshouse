@@ -1,5 +1,5 @@
 import { useFonts } from 'expo-font';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import EventData from './EventData';
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 10,
         width: '90%',
-        height: '15%',
+        height: '20%',
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -38,10 +38,8 @@ const styles = StyleSheet.create({
     },
     mainImage: {
         width: 106,
-        height: 90
-    },
-    icon: {
-
+        height: 90,
+        marginRight: '5%'
     },
     big: {
         fontSize: 18,
@@ -52,8 +50,21 @@ const styles = StyleSheet.create({
     inter: {
         fontFamily: 'Inter'
     },
+    iconGroup: {
+        width: '100%',
+        flexDirection: 'row'
+    },
+    marginRight: {
+        marginRight: '10%'
+    },
     row: {
         flexDirection: 'row'
+    },
+    rightSide: {
+        flexDirection: 'column',
+        alignContent: 'flex-end',
+        justifyContent: 'space-between',
+        height: '100%'
     }
 });
 
@@ -77,36 +88,40 @@ const EventCard = (props: {
         minute: '2-digit'
     });
 
-    if (props.data.imageURI == undefined) {
-        props.data.imageURI = defaultImageURI;
-    }
+    let mainImage = (props.data.imageURI == undefined ? 
+        (<View style={[styles.mainImage, {backgroundColor: '#d9d9d9', borderRadius: 5}]}></View>)
+    : (<Image source={{ uri: props.data.imageURI }} style={styles.mainImage} />));
 
     return (
         <View style={styles.card}>
             <View style={styles.inner}>
                 <View style={styles.leftSide}>
-                    <Image source={{ uri: props.data.imageURI }} style={styles.mainImage} />
+                    {mainImage}
                     <View style={styles.info}>
                         <Text style={[styles.bold, styles.big]}>{props.data.eventName}</Text>
                         <View style={styles.row}>
                             <Text style={styles.inter}>by </Text>
                             <Text style={styles.bold}>{props.data.postedBy}</Text>
                         </View>
-                        <View style={styles.row}>
-                            <FontAwesome5 name="clock" size={15} color="black" />
+                        <View style={styles.iconGroup}>
+                            <FontAwesome5 name="clock" size={15} color="black" style={styles.marginRight}/>
                             <Text style={styles.inter}>{time}</Text>
                         </View>
-                        <View>
+                        <View style={styles.iconGroup}>
+                            <Ionicons name="location-sharp" size={15} color="black" style={styles.marginRight}/>
                             <Text style={styles.inter}>{props.data.location}</Text>
                         </View>
                     </View>
                 </View>
-                <View style={styles.dateInfo}>
-                    <View style={{alignItems: 'flex-end'}}>
-                        <Text style={styles.bold}>{weekday}</Text>
-                        <Text style={styles.inter}>{month}</Text>
-                        <Text style={[styles.inter, styles.big]}>{dayOfMonth}</Text>
+                <View style={styles.rightSide}>
+                    <View style={styles.dateInfo}>
+                        <View style={{alignItems: 'flex-end'}}>
+                            <Text style={styles.bold}>{weekday}</Text>
+                            <Text style={styles.inter}>{month}</Text>
+                            <Text style={[styles.inter, styles.big]}>{dayOfMonth}</Text>
+                        </View>
                     </View>
+                    <FontAwesome5 name="heart" size={20} color="black" style={{textAlign: 'right'}}/>
                 </View>
             </View>
         </View>
