@@ -1,7 +1,7 @@
 import { useFonts } from 'expo-font';
-import { FontAwesome5, Ionicons } from '@expo/vector-icons';
-import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { AntDesign, FontAwesome5, Ionicons } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import EventData from './EventData';
 
 const defaultImageURI: string = 'https://brand.rice.edu/sites/g/files/bxs2591/files/2019-08/190308_Rice_Mechanical_Brand_Standards_Logos-2.png';
@@ -72,12 +72,14 @@ const styles = StyleSheet.create({
 
 const EventCard = (props: {
     data: EventData,
-    onPress?: () => void
+    onPress?: () => void,
+    onLike?: (boolean) => void
 }) => {
     const [fontsLoaded] = useFonts({
         Inter: require('../assets/fonts/Inter-Regular.otf'),
         InterBold: require('../assets/fonts/Inter-Bold.otf')
     });
+    const [liked, setLiked] = useState(false);
 
     if (!fontsLoaded) {
         return null;
@@ -93,7 +95,11 @@ const EventCard = (props: {
 
     let mainImage = (props.data.imageURI == undefined ? 
         (<View style={[styles.mainImage, {backgroundColor: '#d9d9d9', borderRadius: 5}]}></View>)
-    : (<Image source={{ uri: props.data.imageURI }} style={styles.mainImage} />));
+    : (<Image source={{ uri: props.data.imageURI }} style={[styles.mainImage, {resizeMode: 'center'}]} />));
+
+    let likeIcon = (liked ?
+                        (<AntDesign name="heart" size={20} color="black" style={{textAlign: 'right'}}/>) :
+                        (<AntDesign name="hearto" size={20} color="black" style={{textAlign: 'right'}}/>));
 
     return (
         <TouchableOpacity style={styles.card} onPress={props.onPress}>
@@ -128,7 +134,14 @@ const EventCard = (props: {
                             <Text style={[styles.inter, styles.big]}>{dayOfMonth}</Text>
                         </View>
                     </View>
-                    <FontAwesome5 name="heart" size={20} color="black" style={{textAlign: 'right'}}/>
+                    <TouchableWithoutFeedback onPress={() => {
+                        if (props.onLike !== undefined) {
+                            props.onLike(!liked);
+                        }
+                        setLiked(!liked);
+                    }}>
+                        {likeIcon}
+                    </TouchableWithoutFeedback>
                 </View>
             </View>
         </TouchableOpacity>
