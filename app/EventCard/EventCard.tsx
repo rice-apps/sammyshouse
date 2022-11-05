@@ -3,8 +3,10 @@ import { AntDesign, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import IEventCardData from './IEventCardData';
+import IEvent from '../IEvent';
 
 const defaultImageURI: string = 'https://brand.rice.edu/sites/g/files/bxs2591/files/2019-08/190308_Rice_Mechanical_Brand_Standards_Logos-2.png';
+const defaultLocation: string = 'Unknown';
 
 const styles = StyleSheet.create({
     card: {
@@ -73,7 +75,7 @@ const styles = StyleSheet.create({
 const EventCard = (props: {
     data: IEventCardData,
     onPress?: () => void,
-    onLike?: (boolean) => void
+    onLike?: (liked: boolean) => void
 }) => {
     const [fontsLoaded] = useFonts({
         Inter: require('../assets/fonts/Inter-Regular.otf'),
@@ -92,6 +94,8 @@ const EventCard = (props: {
         hour: '2-digit',
         minute: '2-digit'
     });
+
+    let location = (props.data.location !== undefined ? props.data.location : defaultLocation);
 
     let mainImage = (props.data.imageURI == undefined ? 
         (<View style={[styles.mainImage, {backgroundColor: '#d9d9d9', borderRadius: 5}]}></View>)
@@ -121,7 +125,7 @@ const EventCard = (props: {
                             </View>
                             <View style={styles.iconGroup}>
                                 <Ionicons name="location-sharp" size={15} color="black" style={styles.marginRight}/>
-                                <Text style={styles.inter}>{props.data.location}</Text>
+                                <Text style={styles.inter}>{location}</Text>
                             </View>
                         </View>
                     </View>
@@ -148,4 +152,18 @@ const EventCard = (props: {
     );
 };
 
+const eventCardsFromData: (data: IEvent[]) => JSX.Element[] = (data: IEvent[]) => {
+    return data.map(eventInfo => {
+        const eventData: IEventCardData = {
+            eventName: eventInfo.name,
+            postedBy: "TODO",
+            dateTime: eventInfo.date,
+            location: eventInfo.location,
+            imageURI: eventInfo.photo
+        };
+        return <EventCard data={eventData} key={eventInfo._id}/>
+    });
+};
+
 export default EventCard;
+export { eventCardsFromData };
