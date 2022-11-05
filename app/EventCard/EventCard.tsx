@@ -3,7 +3,7 @@ import { AntDesign, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import IEventCardData from './IEventCardData';
-import IEvent from '../IEvent';
+import IEvent, { IEventIntermediate } from '../IEvent';
 
 const defaultImageURI: string = 'https://brand.rice.edu/sites/g/files/bxs2591/files/2019-08/190308_Rice_Mechanical_Brand_Standards_Logos-2.png';
 const defaultLocation: string = 'Unknown';
@@ -152,6 +152,20 @@ const EventCard = (props: {
     );
 };
 
+const parseEvent: (data: IEventIntermediate) => IEvent = (data) => {
+    const eventInfo: IEvent = {
+        _id: data._id,
+        name: data.name,
+        photo: data.photo,
+        location: data.location,
+        date: new Date(data.date),
+        description: data.description,
+        tags: data.tags,
+        price: data.price
+    };
+    return eventInfo;
+}
+
 const eventCardsFromData: (data: IEvent[]) => JSX.Element[] = (data: IEvent[]) => {
     return data.map(eventInfo => {
         const eventData: IEventCardData = {
@@ -166,4 +180,4 @@ const eventCardsFromData: (data: IEvent[]) => JSX.Element[] = (data: IEvent[]) =
 };
 
 export default EventCard;
-export { eventCardsFromData };
+export { parseEvent, eventCardsFromData };
