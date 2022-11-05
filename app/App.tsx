@@ -15,9 +15,9 @@ export default function App() {
   }, []);
   /*
       <EventCard data={{
-        eventName: 'Event',
+        eventName: 'Test Event',
         postedBy: 'Carson Foster',
-        location: 'Lilie Lab',
+        location: 'RMC Courtyard AAAA',
         dateTime: new Date('15 December 2022 1:48 PM')
       }} onPress={() => console.log("pressed")} onLike={(liked) => console.log(`liked: ${liked}`)}/>
   */

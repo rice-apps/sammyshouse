@@ -27,13 +27,15 @@ const styles = StyleSheet.create({
     leftSide: {
         height: '90%',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        flex: 1
     },
     info: {
         height: '80%',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        flex: 1
     },
     dateInfo: {
         flexDirection: 'column',
@@ -56,7 +58,8 @@ const styles = StyleSheet.create({
     },
     iconGroup: {
         width: '100%',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        overflow: 'hidden'
     },
     marginRight: {
         marginRight: '10%'
@@ -125,7 +128,7 @@ const EventCard = (props: {
                             </View>
                             <View style={styles.iconGroup}>
                                 <Ionicons name="location-sharp" size={15} color="black" style={styles.marginRight}/>
-                                <Text style={styles.inter}>{location}</Text>
+                                <Text numberOfLines={1} style={styles.inter}>{location}</Text>
                             </View>
                         </View>
                     </View>
