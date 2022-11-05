@@ -2,7 +2,7 @@ import { useFonts } from 'expo-font';
 import { AntDesign, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
-import EventData from './EventData';
+import IEventCardData from './IEventCardData';
 
 const defaultImageURI: string = 'https://brand.rice.edu/sites/g/files/bxs2591/files/2019-08/190308_Rice_Mechanical_Brand_Standards_Logos-2.png';
 
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
 });
 
 const EventCard = (props: {
-    data: EventData,
+    data: IEventCardData,
     onPress?: () => void,
     onLike?: (boolean) => void
 }) => {

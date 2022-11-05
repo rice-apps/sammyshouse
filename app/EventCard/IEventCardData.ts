@@ -1,4 +1,4 @@
-interface EventData {
+interface IEventCardData {
     eventName: string,
     postedBy: string,
     location: string,
@@ -6,4 +6,4 @@ interface EventData {
     imageURI?: string
 }
 
-export default EventData;
+export default IEventCardData;
