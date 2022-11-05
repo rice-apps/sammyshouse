@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import EventCard, { eventCardsFromData } from './EventCard/EventCard';
+import EventCard, { eventCardsFromData, parseEvent } from './EventCard/EventCard';
 import IEvent from './IEvent';
 
 export default function App() {
   const [data, setData] : [IEvent[], any] = useState([]);
   useEffect(() => {
-   fetch('http://localhost:3000/api/getAllEvents').then(res => res.json()).then(events => setData(events)).catch(e => console.log(e));
+   fetch('http://localhost:3000/api/getAllEvents')
+    .then(res => res.json())
+    .then(events => events.map(parseEvent))
+    .then(events => setData(events))
+    .catch(e => console.log(e));
   }, []);
   /*
       <EventCard data={{
@@ -19,7 +23,7 @@ export default function App() {
   */
   return (
     <View style={styles.container}>
-      {'eventCardsFromData(data)'}
+      {eventCardsFromData(data)}
       <StatusBar style="auto" />
     </View>
   );
