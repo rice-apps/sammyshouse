@@ -9,7 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@expo/webpack-config": "^0.17.0",
+    "@expo/webpack-config": "^0.16.19",
     "@types/jest": "^29.1.2",
     "@types/node": "^18.11.0",
     "@types/react": "^18.0.21",
@@ -21,6 +21,9 @@
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-native": "^0.69.6",
+    "react-native-elements": "^3.4.2",
+    "react-native-paper": "^5.0.0-rc.9",
+    "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.7",
     "react-router-dom": "^6.4.2",
     "style-loader": "^3.3.1",
