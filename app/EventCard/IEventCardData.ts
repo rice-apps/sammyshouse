@@ -1,8 +1,8 @@
 interface IEventCardData {
     eventName: string,
     postedBy: string,
-    location: string,
     dateTime: Date,
+    location?: string,
     imageURI?: string
 }
 
