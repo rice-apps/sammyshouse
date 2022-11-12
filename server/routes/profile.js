@@ -26,26 +26,6 @@ router.post('/addProfile', async (req, res) => {
     }
 });
 
-router.post('/:profileId/follow/:orgId', async (req, res) => {
-    const profileId = req.params.profileId;
-    const orgId = req.params.orgId;
-    try {
-        const profile = await Profile.findById(profileId);
-        const organization = await Organization.findById(orgId);
-        const membership = new Membership({
-            member: profile._id,
-            role: "Member",
-            organization: organization._id
-        });
-        await membership.save();
-        profile.memberships.push(membership._id);
-        organization.memberships.push(membership._id);
-        await profile.save();
-        await organization.save();
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
 
 // Get all profiles
 router.get('/getAllProfiles', async (req, res) => {
@@ -92,6 +72,49 @@ router.patch('/updateProfile/:id', async (req, res) => {
         res.send(result);
     } catch (error) {
         res.status(400).json({ message: error.message });
+    }
+});
+
+// have profile follow an organization
+router.post('/:profileId/follow/:orgId', async (req, res) => {
+    const profileId = req.params.profileId;
+    const orgId = req.params.orgId;
+    try {
+        const profile = await Profile.findById(profileId);
+        const organization = await Organization.findById(orgId);
+        const membership = new Membership({
+            member: profile._id,
+            role: "Member",
+            organization: organization._id
+        });
+        await membership.save();
+        profile.memberships.push(membership._id);
+        organization.memberships.push(membership._id);
+        await profile.save();
+        await organization.save();
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// have profile unfollow an organization
+router.post('/:profileId/unfollow/:orgId', async (req, res) => {
+    const profileId = req.params.profileId;
+    const orgId = req.params.orgId;
+    try {
+        const profile = await Profile.findById(profileId);
+        const organization = await Organization.findById(orgId);
+        const membership = await Membership.findOneAndDelete({
+            member: profile._id,
+            role: "Member",
+            organization: organization._id
+        });
+        profile.memberships = profile.memberships.filter(m => m._id !== membership._id);
+        organization.memberships = organization.memberships.filter(m => m._id !== membership._id);
+        await profile.save();
+        await organization.save();
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 });
 
