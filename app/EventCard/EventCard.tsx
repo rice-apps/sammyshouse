@@ -2,9 +2,11 @@ import { useFonts } from 'expo-font';
 import { AntDesign, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
-import EventData from './EventData';
+import IEventCardData from './IEventCardData';
+import IEvent, { IEventIntermediate } from '../IEvent';
 
 const defaultImageURI: string = 'https://brand.rice.edu/sites/g/files/bxs2591/files/2019-08/190308_Rice_Mechanical_Brand_Standards_Logos-2.png';
+const defaultLocation: string = 'Unknown';
 
 const styles = StyleSheet.create({
     card: {
@@ -25,13 +27,15 @@ const styles = StyleSheet.create({
     leftSide: {
         height: '90%',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        flex: 1
     },
     info: {
         height: '80%',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        flex: 1
     },
     dateInfo: {
         flexDirection: 'column',
@@ -54,7 +58,8 @@ const styles = StyleSheet.create({
     },
     iconGroup: {
         width: '100%',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        overflow: 'hidden'
     },
     marginRight: {
         marginRight: '10%'
@@ -71,9 +76,9 @@ const styles = StyleSheet.create({
 });
 
 const EventCard = (props: {
-    data: EventData,
-    onPress?: () => void,
-    onLike?: (boolean) => void
+    data: IEventCardData,
+    onPress?: (_id: string) => void,
+    onLike?: (_id: string, liked: boolean) => void
 }) => {
     const [fontsLoaded] = useFonts({
         Inter: require('../assets/fonts/Inter-Regular.otf'),
@@ -93,6 +98,8 @@ const EventCard = (props: {
         minute: '2-digit'
     });
 
+    let location = (props.data.location !== undefined ? props.data.location : defaultLocation);
+
     let mainImage = (props.data.imageURI == undefined ? 
         (<View style={[styles.mainImage, {backgroundColor: '#d9d9d9', borderRadius: 5}]}></View>)
     : (<Image source={{ uri: props.data.imageURI }} style={[styles.mainImage, {resizeMode: 'center'}]} />));
@@ -102,7 +109,7 @@ const EventCard = (props: {
                         (<AntDesign name="hearto" size={20} color="black" style={{textAlign: 'right'}}/>));
 
     return (
-        <TouchableOpacity style={styles.card} onPress={props.onPress}>
+        <TouchableOpacity style={styles.card} onPress={() => props.onPress(props.data.eventId)}>
             <View style={styles.inner}>
                 <View style={styles.leftSide}>
                     {mainImage}
@@ -121,7 +128,7 @@ const EventCard = (props: {
                             </View>
                             <View style={styles.iconGroup}>
                                 <Ionicons name="location-sharp" size={15} color="black" style={styles.marginRight}/>
-                                <Text style={styles.inter}>{props.data.location}</Text>
+                                <Text numberOfLines={1} style={styles.inter}>{location}</Text>
                             </View>
                         </View>
                     </View>
@@ -136,7 +143,7 @@ const EventCard = (props: {
                     </View>
                     <TouchableWithoutFeedback onPress={() => {
                         if (props.onLike !== undefined) {
-                            props.onLike(!liked);
+                            props.onLike(props.data.eventId, !liked);
                         }
                         setLiked(!liked);
                     }}>
@@ -148,4 +155,32 @@ const EventCard = (props: {
     );
 };
 
+const parseEvent: (data: IEventIntermediate) => IEvent = (data) => {
+    const eventInfo: IEvent = {
+        _id: data._id,
+        name: data.name,
+        photo: data.photo,
+        location: data.location,
+        date: new Date(data.date),
+        description: data.description,
+        tags: data.tags,
+        price: data.price
+    };
+    return eventInfo;
+}
+
+const eventCardFromData = (event: IEvent,
+                          onPress?: (_id: string) => void, onLike?: (_id: string, liked: boolean) => void) => {
+    const eventData: IEventCardData = {
+        eventId: event._id,
+        eventName: event.name,
+        postedBy: "TODO",
+        dateTime: event.date,
+        location: event.location,
+        imageURI: event.photo
+    };
+    return <EventCard data={eventData} key={event._id} onPress={onPress} onLike={onLike}/>
+};
+
 export default EventCard;
+export { parseEvent, eventCardFromData };
