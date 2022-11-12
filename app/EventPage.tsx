@@ -5,7 +5,6 @@ import { BottomNavigation, Text, Card, Button} from 'react-native-paper';
 import { Appbar } from 'react-native-paper';
 import { Badge } from 'react-native-paper';
 import { Avatar } from 'react-native-paper';
-import { brotliDecompress } from 'zlib';
 
 // need to add functionality to commands, just placeholders for now. 
 
