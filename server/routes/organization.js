@@ -1,0 +1,132 @@
+const express = require('express');
+const Profile = require('../model/profile');
+const Organization = require('../model/organization');
+const Membership = require('../model/membership');
+
+const router = express.Router()
+
+module.exports = router;
+
+// Add a new organization
+router.post('/addOrganization', async (req, res) => {
+    const data = new Organization({
+        name: req.body.name,
+        description: req.body.description,
+        photo: req.body.photo,
+        classification: req.body.classification,
+        members: [],
+        events: []
+    });
+    
+    try {
+        const dataToSave = await data.save();
+        res.status(200).json(dataToSave);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+
+// Get all organizations
+router.get('/getAllOrganizations', async (req, res) => {
+    try {
+        const data = await Organization.find();
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Get organization by ID
+router.get('/getOrganizationById/:id', async (req, res) => {
+    try{
+        const data = await Organization.findById(req.params.id);
+        res.json(data);
+    } catch(error){
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Get organizations by name
+router.get('/getOrganizationsByName/:name', async (req, res) => {
+    try {
+        console.log(req)
+        const data = await Organization.find({ name : req.params.name });
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Update organization by ID
+router.patch('/updateOrganization/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const updatedData = req.body;
+        const options = { new: true };
+
+        const result = await Organization.findByIdAndUpdate(
+            id, updatedData, options
+        );
+
+        res.send(result);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// make a profile an admin of an org
+router.post('/:orgId/addAdmin/:profileId', async (req, res) => {
+    const profileId = req.params.profileId;
+    const orgId = req.params.orgId;
+    try {
+        const profile = await Profile.findById(profileId);
+        const organization = await Organization.findById(orgId);
+        const membership = new Membership({
+            member: profile._id,
+            role: "Admin",
+            organization: organization._id
+        });
+        await membership.save();
+        profile.memberships.push(membership._id);
+        organization.memberships.push(membership._id);
+        await profile.save();
+        await organization.save();
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// remove a profile from being an admin of an org
+router.post('/:orgId/removeAdmin/:profileId', async (req, res) => {
+    const profileId = req.params.profileId;
+    const orgId = req.params.orgId;
+    try {
+        const profile = await Profile.findById(profileId);
+        const organization = await Organization.findById(orgId);
+        const membership = await Membership.findOneAndDelete({
+            member: profile._id,
+            role: "Admin",
+            organization: organization._id
+        });
+        profile.memberships = profile.memberships.filter(m => m._id !== membership._id);
+        organization.memberships = organization.memberships.filter(m => m._id !== membership._id);
+        await profile.save();
+        await organization.save();
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Delete organization by ID
+router.delete('/deleteOrganization/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data = await Organization.findByIdAndDelete(id);
+        
+        res.send(`Organization '${data.name}' (id: ${id}) has been deleted.`);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
