@@ -23,6 +23,11 @@ const profileSchema = new mongoose.Schema({
     },
     memberships: {
         required: true,
+        type: [{
+            required: true,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Membership'
+        }]
     }
 });
 
