@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
 
 const EventCard = (props: {
     data: IEventCardData,
-    onPress?: () => void,
-    onLike?: (liked: boolean) => void
+    onPress?: (_id: string) => void,
+    onLike?: (_id: string, liked: boolean) => void
 }) => {
     const [fontsLoaded] = useFonts({
         Inter: require('../assets/fonts/Inter-Regular.otf'),
@@ -109,7 +109,7 @@ const EventCard = (props: {
                         (<AntDesign name="hearto" size={20} color="black" style={{textAlign: 'right'}}/>));
 
     return (
-        <TouchableOpacity style={styles.card} onPress={props.onPress}>
+        <TouchableOpacity style={styles.card} onPress={() => props.onPress(props.data.eventId)}>
             <View style={styles.inner}>
                 <View style={styles.leftSide}>
                     {mainImage}
@@ -143,7 +143,7 @@ const EventCard = (props: {
                     </View>
                     <TouchableWithoutFeedback onPress={() => {
                         if (props.onLike !== undefined) {
-                            props.onLike(!liked);
+                            props.onLike(props.data.eventId, !liked);
                         }
                         setLiked(!liked);
                     }}>
@@ -169,18 +169,18 @@ const parseEvent: (data: IEventIntermediate) => IEvent = (data) => {
     return eventInfo;
 }
 
-const eventCardsFromData: (data: IEvent[]) => JSX.Element[] = (data: IEvent[]) => {
-    return data.map(eventInfo => {
-        const eventData: IEventCardData = {
-            eventName: eventInfo.name,
-            postedBy: "TODO",
-            dateTime: eventInfo.date,
-            location: eventInfo.location,
-            imageURI: eventInfo.photo
-        };
-        return <EventCard data={eventData} key={eventInfo._id}/>
-    });
+const eventCardFromData = (event: IEvent,
+                          onPress?: (_id: string) => void, onLike?: (_id: string, liked: boolean) => void) => {
+    const eventData: IEventCardData = {
+        eventId: event._id,
+        eventName: event.name,
+        postedBy: "TODO",
+        dateTime: event.date,
+        location: event.location,
+        imageURI: event.photo
+    };
+    return <EventCard data={eventData} key={event._id} onPress={onPress} onLike={onLike}/>
 };
 
 export default EventCard;
-export { parseEvent, eventCardsFromData };
+export { parseEvent, eventCardFromData };

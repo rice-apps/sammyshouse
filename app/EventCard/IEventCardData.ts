@@ -1,4 +1,5 @@
 interface IEventCardData {
+    eventId: string,
     eventName: string,
     postedBy: string,
     dateTime: Date,
