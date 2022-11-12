@@ -13,22 +13,6 @@ export default function EventPage() {
   const [text, setText] = React.useState("");
   const _goBack = () => console.log('Went back');
   const _handleMore = () => console.log('Shown more');
-  const HomeRoute = () => <View></View>;
-  const AddRoute = () => <View></View>;
-  const MeRoute = () => <View></View>;
-
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: 'home', title: 'Home', focusedIcon: 'home-outline'},
-    { key: 'add', title: 'Add', focusedIcon: 'plus-circle-outline' },
-    { key: 'me', title: 'Me', focusedIcon: 'account-circle-outline' },
-  ]);
-
-  const renderScene = BottomNavigation.SceneMap({
-    home: HomeRoute,
-    add: AddRoute,
-    me: MeRoute,
-  });
 
   return (
     <PaperProvider>
@@ -56,11 +40,6 @@ export default function EventPage() {
       <Avatar.Text size={30} label="Tag" />
     </View>
     
-    <BottomNavigation
-      navigationState={{ index, routes }}
-      onIndexChange={setIndex}
-      renderScene={renderScene}
-    />
     </PaperProvider>
   );
 }
