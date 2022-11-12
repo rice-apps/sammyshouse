@@ -9,6 +9,7 @@ import { brotliDecompress } from 'zlib';
 import EventPage from "./EventPage"; 
 import EventCard, { eventCardFromData, parseEvent } from './EventCard/EventCard';
 import IEvent from './IEvent';
+import BottomBar from "./BottomBar"; 
 
 // need to add functionality to commands, just placeholders for now. 
 

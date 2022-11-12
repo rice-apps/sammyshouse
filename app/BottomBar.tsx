@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
-import { View} from 'react-native';
+import { View } from 'react-native';
 
 const HomeRoute = () => <View></View>;
 const AddRoute = () => <View></View>;
 const MeRoute = () => <View></View>;
 
-const BottomNavigation = () => {
+const BottomBar = () => {
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
       { key: 'home', title: 'Home', focusedIcon: 'home-outline'},
@@ -29,4 +29,4 @@ const BottomNavigation = () => {
   );
 };
 
-export default BottomNavigation;
+export default BottomBar;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View} from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { BottomNavigation, Text, Card, Button} from 'react-native-paper';
+import { Text, Card, Button} from 'react-native-paper';
 import { Appbar } from 'react-native-paper';
 import { Badge } from 'react-native-paper';
 import { Avatar } from 'react-native-paper';
