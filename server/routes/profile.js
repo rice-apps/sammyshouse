@@ -89,9 +89,10 @@ router.post('/:profileId/follow/:orgId', async (req, res) => {
         });
         await membership.save();
         profile.memberships.push(membership._id);
-        organization.memberships.push(membership._id);
+        organization.members.push(membership._id);
         await profile.save();
         await organization.save();
+        res.status(200).send("Followed organization succesfully");
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -113,6 +114,7 @@ router.post('/:profileId/unfollow/:orgId', async (req, res) => {
         organization.memberships = organization.memberships.filter(m => m._id !== membership._id);
         await profile.save();
         await organization.save();
+        res.status(200).send("Unfollowed organization successfully");
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

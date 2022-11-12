@@ -92,6 +92,7 @@ router.post('/:orgId/addAdmin/:profileId', async (req, res) => {
         organization.memberships.push(membership._id);
         await profile.save();
         await organization.save();
+        res.status(200).send("Succesfully made admin");
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -113,6 +114,7 @@ router.post('/:orgId/removeAdmin/:profileId', async (req, res) => {
         organization.memberships = organization.memberships.filter(m => m._id !== membership._id);
         await profile.save();
         await organization.save();
+        res.status(200).send("Successfully removed admin");
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
