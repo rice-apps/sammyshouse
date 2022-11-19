@@ -7,6 +7,11 @@ const router = express.Router()
 
 module.exports = router;
 
+const asyncFilter = async (arr, f) => {
+    const results = await Promise.all(arr.map(f));
+    return arr.filter((_v, index) => results[index]);
+}
+
 // Add a new organization
 router.post('/addOrganization', async (req, res) => {
     const data = new Organization({
@@ -89,7 +94,7 @@ router.post('/:orgId/addAdmin/:profileId', async (req, res) => {
         });
         await membership.save();
         profile.memberships.push(membership._id);
-        organization.memberships.push(membership._id);
+        organization.members.push(membership._id);
         await profile.save();
         await organization.save();
         res.status(200).send("Succesfully made admin");
@@ -105,15 +110,19 @@ router.post('/:orgId/removeAdmin/:profileId', async (req, res) => {
     try {
         const profile = await Profile.findById(profileId);
         const organization = await Organization.findById(orgId);
-        const membership = await Membership.findOneAndDelete({
-            member: profile._id,
-            role: "Admin",
-            organization: organization._id
-        });
-        profile.memberships = profile.memberships.filter(m => m._id !== membership._id);
-        organization.memberships = organization.memberships.filter(m => m._id !== membership._id);
+        const keepMembership = async (member_id) => {
+            const membership = await Membership.findById(member_id);
+            return membership.member != profileId || membership.role != "Admin" || membership.organization != orgId;
+        }
+        profile.memberships = await asyncFilter(profile.memberships, keepMembership);
+        organization.members = await asyncFilter(organization.members, keepMembership);
         await profile.save();
         await organization.save();
+        await Membership.deleteMany({
+            member: profileId,
+            role: "Admin",
+            organization: orgId
+        });
         res.status(200).send("Successfully removed admin");
     } catch (error) {
         res.status(500).json({ message: error.message });
