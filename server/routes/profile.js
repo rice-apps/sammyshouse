@@ -7,6 +7,11 @@ const router = express.Router()
 
 module.exports = router;
 
+const asyncFilter = async (arr, f) => {
+    const results = await Promise.all(arr.map(f));
+    return arr.filter((_v, index) => results[index]);
+}
+
 // Add a new profile
 router.post('/addProfile', async (req, res) => {
     const data = new Profile({
@@ -50,7 +55,7 @@ router.get('/getProfileById/:id', async (req, res) => {
 // Get profiles by name
 router.get('/getProfilesByName/:name', async (req, res) => {
     try {
-        console.log(req)
+        console.log(req);
         const data = await Profile.find({ name : req.params.name });
         res.json(data);
     } catch (error) {
@@ -105,15 +110,19 @@ router.post('/:profileId/unfollow/:orgId', async (req, res) => {
     try {
         const profile = await Profile.findById(profileId);
         const organization = await Organization.findById(orgId);
-        const membership = await Membership.findOneAndDelete({
-            member: profile._id,
-            role: "Member",
-            organization: organization._id
-        });
-        profile.memberships = profile.memberships.filter(m => m._id !== membership._id);
-        organization.memberships = organization.memberships.filter(m => m._id !== membership._id);
+        const keepMembership = async (member_id) => {
+            const membership = await Membership.findById(member_id);
+            return membership.member != profileId || membership.role != "Member" || membership.organization != orgId
+        };
+        profile.memberships = await asyncFilter(profile.memberships, keepMembership);
+        organization.members = await asyncFilter(organization.members, keepMembership);
         await profile.save();
         await organization.save();
+        await Membership.deleteMany({
+            member: profileId,
+            role: "Member",
+            organization: orgId
+        });
         res.status(200).send("Unfollowed organization successfully");
     } catch (error) {
         res.status(500).json({ message: error.message });
