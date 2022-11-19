@@ -63,6 +63,20 @@ router.get('/getOrganizationsByName/:name', async (req, res) => {
     }
 });
 
+// Add event to organization
+router.post('/:orgId/addEvent/:eventId', async (req, res) => {
+    try {
+        const orgId = req.params.orgId;
+        const eventId = req.params.eventId;
+        const organization = await Organization.findById(orgId);
+        organization.events.push(eventId);
+        await organization.save();
+        res.status(200).send("Successfully added event");
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // Update organization by ID
 router.patch('/updateOrganization/:id', async (req, res) => {
     try {
