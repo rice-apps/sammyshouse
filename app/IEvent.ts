@@ -6,7 +6,8 @@ interface IEvent {
     date: Date,
     description: string,
     tags: string[],
-    price?: number
+    price?: number,
+    host?: string
 };
 
 interface IEventIntermediate {
@@ -18,6 +19,7 @@ interface IEventIntermediate {
     description: string,
     tags: string[],
     price?: number
+    host?: string
 }
 
 export default IEvent;
