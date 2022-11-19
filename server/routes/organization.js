@@ -3,7 +3,7 @@ const Profile = require('../model/profile');
 const Organization = require('../model/organization');
 const Membership = require('../model/membership');
 
-const router = express.Router()
+const router = express.Router();
 
 module.exports = router;
 
