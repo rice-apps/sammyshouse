@@ -13,6 +13,7 @@ const asyncFilter = async (arr, f) => {
 }
 
 // Add a new organization
+// TODO: make initial add organization route also add an admin
 router.post('/addOrganization', async (req, res) => {
     const data = new Organization({
         name: req.body.name,
@@ -111,7 +112,7 @@ router.post('/:orgId/addAdmin/:profileId', async (req, res) => {
         organization.members.push(membership._id);
         await profile.save();
         await organization.save();
-        res.status(200).send("Succesfully made admin");
+        res.status(200).send("Successfully made admin");
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
