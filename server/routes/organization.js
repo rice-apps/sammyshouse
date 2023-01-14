@@ -13,7 +13,6 @@ const asyncFilter = async (arr, f) => {
 }
 
 // Add a new organization
-// TODO: make initial add organization route also add an admin
 router.post('/addOrganization', async (req, res) => {
     const adminProfileId = req.body.adminProfileId;
     const data = new Organization({
