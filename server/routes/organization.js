@@ -15,6 +15,7 @@ const asyncFilter = async (arr, f) => {
 // Add a new organization
 // TODO: make initial add organization route also add an admin
 router.post('/addOrganization', async (req, res) => {
+    const adminProfileId = req.body.adminProfileId;
     const data = new Organization({
         name: req.body.name,
         description: req.body.description,
@@ -23,8 +24,16 @@ router.post('/addOrganization', async (req, res) => {
         members: [],
         events: []
     });
-    
     try {
+        const adminProfile = await Profile.findById(adminProfileId);
+        const membership = new Membership({
+            member: adminProfile._id,
+            role: "Admin",
+            organization: data._id
+        });
+        await membership.save();
+        data.members.push(membership._id);
+
         const dataToSave = await data.save();
         res.status(200).json(dataToSave);
     } catch (error) {
