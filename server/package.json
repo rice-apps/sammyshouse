@@ -1,9 +1,11 @@
 {
   "dependencies": {
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongoose": "^6.6.7",
+    "multer-gridfs-storage": "^5.0.2",
     "nodemon": "^2.0.20"
   },
   "scripts": {
