@@ -3,6 +3,7 @@ import { Octicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Button, View, StyleSheet, Text, TextInput } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import { Styles } from './Theme';
 
 // TODO: figure out server address
 const server: string = "http://localhost:3000";
@@ -113,9 +114,9 @@ const AddProfile = (props: {
         <View style={styles.container}>
             {/* TODO: add picture adder */}
             <View>
-                <Text>Welcome,</Text>
+                <Text style={Styles.darkMainColor}>Welcome,</Text>
                 <View style={styles.row}>
-                    <TextInput placeholder="Name" placeholderTextColor="grey" style={styles.name}
+                    <TextInput placeholder="Name" placeholderTextColor="grey" style={[Styles.darkMainColor, styles.name]}
                         onChangeText={text => {
                             setName(text);
                             if (text.length > 0)
