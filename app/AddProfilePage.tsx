@@ -113,9 +113,9 @@ const AddProfile = (props: {
         <View style={styles.container}>
             {/* TODO: add picture adder */}
             <View>
+                <Text>Welcome,</Text>
                 <View style={styles.row}>
-                    <Octicons name="pencil" size={15} color="grey" />
-                    <TextInput placeholder="Name" placeholderTextColor="grey" style={styles.outline}
+                    <TextInput placeholder="Name" placeholderTextColor="grey" style={styles.name}
                         onChangeText={text => {
                             setName(text);
                             if (text.length > 0)
@@ -123,6 +123,7 @@ const AddProfile = (props: {
                             else
                                 setNameError(true);
                         }}></TextInput>
+                    <Octicons name="pencil" size={15} color="grey" />
                 </View>
                 {displayError(nameError)}
             </View>
@@ -144,7 +145,7 @@ const AddProfile = (props: {
                 </View>
                 {displayError(yearError)}
             </View>
-            <Button title="Register" onPress={register}/>
+            <Button title="Next" onPress={register}/>
         </View>
     );
 }
@@ -162,13 +163,10 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: "row"
     },
-    outline: {
-        padding: 1,
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: "black",
-        borderRadius: 5,
-    },
     error: {
 
+    },
+    name: {
+        textDecorationLine: "underline",
     }
 });
