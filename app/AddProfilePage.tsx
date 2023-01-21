@@ -47,6 +47,9 @@ const AddProfile = (props: {
     const [college, setCollege] = useState<College | undefined>();
     const [year, setYear] = useState(0);
     const [photo, setPhoto] = useState<string | undefined>();
+    const [nameError, setNameError] = useState(false);
+    const [collegeError, setCollegeError] = useState(false);
+    const [yearError, setYearError] = useState(false);
 
     const registerSuccess = (res) => {
         console.log("Successfully registered");
@@ -58,15 +61,28 @@ const AddProfile = (props: {
 
     const register = () => {
         // TODO: real error handling
+        let error = false;
+        setNameError(false);
+        setCollegeError(false);
+        setYearError(false);
         if (name.length == 0) {
             console.log("You must provide your name");
-        } else if (college == undefined) {
+            setNameError(true);
+            error = true;
+        }
+        if (college == undefined) {
             console.log("You must select a college");
-        } else if (year == 0) {
+            setCollegeError(true);
+            error = true;
+        }
+        if (year == 0) {
             console.log("You must select your graduation year");
-        } else {
-            // console.log(`'${name}' (${props.email}) at ${college} with year ${year}`);
-            fetch(`${server}/api/profiles/addProfile`, {
+            setYearError(true);
+            error = true;
+        }
+        if (!error) {
+            console.log(`'${name}' (${props.email}) at ${college} with year ${year}`);
+            /*fetch(`${server}/api/profiles/addProfile`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -80,8 +96,15 @@ const AddProfile = (props: {
                 })
             })
             .then(registerSuccess)
-            .catch(registerFailure);
+            .catch(registerFailure);*/
         }
+    };
+
+    const displayError = (show: boolean) => {
+        if (show) {
+            return (<Text style={styles.error}>This field is required.</Text>);
+        }
+        return (<></>);
     };
 
     if (!fontsLoaded) {
@@ -92,18 +115,27 @@ const AddProfile = (props: {
     return (
         <View style={styles.container}>
             {/* TODO: add picture adder */}
-            <View style={styles.row}>
-                <FontAwesome5 name="star" size={15} color="black" />
-                <TextInput placeholder="Name" placeholderTextColor="grey" style={styles.outline}
-                    onChangeText={text => setName(text)}></TextInput>
+            <View>
+                <View style={styles.row}>
+                    <FontAwesome5 name="star" size={15} color="black" />
+                    <TextInput placeholder="Name" placeholderTextColor="grey" style={styles.outline}
+                        onChangeText={text => setName(text)}></TextInput>
+                </View>
+                {displayError(nameError)}
             </View>
-            <View style={styles.row}>
-                <FontAwesome5 name="university" size={15} color="black" />
-                <Dropdown placeholder="College" data={collegeData} labelField="item" valueField="item" onChange={obj => setCollege(obj.item)} />
+            <View>
+                <View style={styles.row}>
+                    <FontAwesome5 name="university" size={15} color="black" />
+                    <Dropdown placeholder="College" data={collegeData} labelField="item" valueField="item" onChange={obj => setCollege(obj.item)} />
+                </View>
+                {displayError(collegeError)}
             </View>
-            <View style={styles.row}>
-                <FontAwesome5 name="calendar-alt" size={15} color="black" />
-                <Dropdown placeholder="Graduation Year" data={yearData} labelField="label" valueField="value" onChange={obj => setYear(obj.value)} />
+            <View>
+                <View style={styles.row}>
+                    <FontAwesome5 name="calendar-alt" size={15} color="black" />
+                    <Dropdown placeholder="Graduation Year" data={yearData} labelField="label" valueField="value" onChange={obj => setYear(obj.value)} />
+                </View>
+                {displayError(yearError)}
             </View>
             <Button title="Register" onPress={register}/>
         </View>
@@ -128,5 +160,8 @@ const styles = StyleSheet.create({
         borderWidth: StyleSheet.hairlineWidth,
         borderColor: "black",
         borderRadius: 5,
+    },
+    error: {
+
     }
 });
