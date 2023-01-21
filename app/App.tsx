@@ -7,7 +7,7 @@ import IEvent from './IEvent';
 export default function App() {
   const [data, setData] : [IEvent[], any] = useState([]);
   useEffect(() => {
-   fetch('http://localhost:3000/api/getAllEvents')
+   fetch('http://localhost:3000/api/events/getAllEvents')
     .then(res => res.json())
     .then(events => events.map(parseEvent))
     .then(events => setData(events))
@@ -38,7 +38,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
