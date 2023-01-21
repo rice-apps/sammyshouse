@@ -46,7 +46,16 @@ const AddProfile = (props: {
     const [photo, setPhoto] = useState<string | undefined>();
 
     const register = () => {
-        console.log(`'${name}' (${props.email}) at ${college} with year ${year}`);
+        // TODO: real error handling
+        if (name.length == 0) {
+            console.log("You must provide your name");
+        } else if (college == undefined) {
+            console.log("You must select a college");
+        } else if (year == 0) {
+            console.log("You must select your graduation year");
+        } else {
+            console.log(`'${name}' (${props.email}) at ${college} with year ${year}`);
+        }
     };
 
     if (!fontsLoaded) {
