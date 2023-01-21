@@ -1,30 +1,36 @@
 import { useFonts } from 'expo-font';
 import { FontAwesome5 } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native';
+import { Button, View, StyleSheet, Text, TextInput } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
 
 type College = "Baker" | "Will Rice" | "Hanszen" |
     "Wiess" | "Jones" | "Brown" | "Lovett" |
     "Sid Rich" | "Martel" | "McMurtry" | "Duncan";
 
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100%",
-        width: "100%"
-    },
-    row: {
-        flexDirection: "row" 
-    },
-    outline: {
-        padding: 1,
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: "black",
-        borderRadius: 5,
-    }
-});
+const collegeData: {item: College}[] = [
+    {item: "Baker"},
+    {item: "Will Rice"},
+    {item: "Hanszen"},
+    {item: "Wiess"},
+    {item: "Jones"},
+    {item: "Brown"},
+    {item: "Lovett"},
+    {item: "Sid Rich"},
+    {item: "Martel"},
+    {item: "McMurtry"},
+    {item: "Duncan"}
+];
+
+const currentYear: number = new Date().getFullYear();
+const yearData: {
+    label: string,
+    value: number
+}[] = [];
+for (let i = 0; i < 6; i++) {
+    let graduation = i + currentYear;
+    yearData.push({ label: graduation.toString(), value: graduation });
+}
 
 // TODO: take email as a prop
 const AddProfile = (props: {
@@ -40,27 +46,53 @@ const AddProfile = (props: {
     const [year, setYear] = useState(0); // TODO: check
     const [photo, setPhoto] = useState<string | undefined>();
 
+    const register = () => {
+        console.log(`'${name}' at ${college} with year ${year}`);
+    };
+
     if (!fontsLoaded) {
         return null;
     }
+
 
     return (
         <View style={styles.container}>
             {/* TODO: add picture adder */}
             <View style={styles.row}>
                 <FontAwesome5 name="star" size={15} color="black" />
-                <TextInput placeholder="Name" placeholderTextColor="grey" style={styles.outline}></TextInput>
+                <TextInput placeholder="Name" placeholderTextColor="grey" style={styles.outline}
+                    onChangeText={text => setName(text)}></TextInput>
             </View>
             <View style={styles.row}>
                 <FontAwesome5 name="university" size={15} color="black" />
-                <Text>College Dropdown Here</Text>
+                <Dropdown placeholder="College" data={collegeData} labelField="item" valueField="item" onChange={obj => setCollege(obj.item)} />
             </View>
             <View style={styles.row}>
                 <FontAwesome5 name="calendar-alt" size={15} color="black" />
-                <Text>Year Dropdown Here</Text>
+                <Dropdown placeholder="Graduation Year" data={yearData} labelField="label" valueField="value" onChange={obj => setYear(obj.value)} />
             </View>
+            <Button title="Register" onPress={register}/>
         </View>
     );
 }
 
 export default AddProfile;
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100%",
+        width: "100%"
+    },
+    row: {
+        flexDirection: "row"
+    },
+    outline: {
+        padding: 1,
+        borderWidth: StyleSheet.hairlineWidth,
+        borderColor: "black",
+        borderRadius: 5,
+    }
+});
