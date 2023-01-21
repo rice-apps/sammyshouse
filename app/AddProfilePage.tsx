@@ -1,5 +1,5 @@
 import { useFonts } from 'expo-font';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { Octicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Button, View, StyleSheet, Text, TextInput } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -114,7 +114,7 @@ const AddProfile = (props: {
             {/* TODO: add picture adder */}
             <View>
                 <View style={styles.row}>
-                    <FontAwesome5 name="star" size={15} color="black" />
+                    <Octicons name="pencil" size={15} color="grey" />
                     <TextInput placeholder="Name" placeholderTextColor="grey" style={styles.outline}
                         onChangeText={text => {
                             setName(text);
@@ -128,7 +128,6 @@ const AddProfile = (props: {
             </View>
             <View>
                 <View style={styles.row}>
-                    <FontAwesome5 name="university" size={15} color="black" />
                     <Dropdown placeholder="College" data={collegeData} labelField="item" valueField="item" onChange={obj => {
                         setCollege(obj.item);
                         setCollegeError(false)
@@ -138,8 +137,7 @@ const AddProfile = (props: {
             </View>
             <View>
                 <View style={styles.row}>
-                    <FontAwesome5 name="calendar-alt" size={15} color="black" />
-                    <Dropdown placeholder="Graduation Year" data={yearData} labelField="label" valueField="value" onChange={obj => {
+                    <Dropdown placeholder="Year" data={yearData} labelField="label" valueField="value" onChange={obj => {
                         setYear(obj.value);
                         setYearError(false)
                     }} />
