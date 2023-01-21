@@ -119,21 +119,33 @@ const AddProfile = (props: {
                 <View style={styles.row}>
                     <FontAwesome5 name="star" size={15} color="black" />
                     <TextInput placeholder="Name" placeholderTextColor="grey" style={styles.outline}
-                        onChangeText={text => setName(text)}></TextInput>
+                        onChangeText={text => {
+                            setName(text);
+                            if (text.length > 0)
+                                setNameError(false);
+                            else
+                                setNameError(true);
+                        }}></TextInput>
                 </View>
                 {displayError(nameError)}
             </View>
             <View>
                 <View style={styles.row}>
                     <FontAwesome5 name="university" size={15} color="black" />
-                    <Dropdown placeholder="College" data={collegeData} labelField="item" valueField="item" onChange={obj => setCollege(obj.item)} />
+                    <Dropdown placeholder="College" data={collegeData} labelField="item" valueField="item" onChange={obj => {
+                        setCollege(obj.item);
+                        setCollegeError(false)
+                    }} />
                 </View>
                 {displayError(collegeError)}
             </View>
             <View>
                 <View style={styles.row}>
                     <FontAwesome5 name="calendar-alt" size={15} color="black" />
-                    <Dropdown placeholder="Graduation Year" data={yearData} labelField="label" valueField="value" onChange={obj => setYear(obj.value)} />
+                    <Dropdown placeholder="Graduation Year" data={yearData} labelField="label" valueField="value" onChange={obj => {
+                        setYear(obj.value);
+                        setYearError(false)
+                    }} />
                 </View>
                 {displayError(yearError)}
             </View>
