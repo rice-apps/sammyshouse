@@ -66,23 +66,20 @@ const AddProfile = (props: {
         setCollegeError(false);
         setYearError(false);
         if (name.length == 0) {
-            console.log("You must provide your name");
             setNameError(true);
             error = true;
         }
         if (college == undefined) {
-            console.log("You must select a college");
             setCollegeError(true);
             error = true;
         }
         if (year == 0) {
-            console.log("You must select your graduation year");
             setYearError(true);
             error = true;
         }
         if (!error) {
-            console.log(`'${name}' (${props.email}) at ${college} with year ${year}`);
-            /*fetch(`${server}/api/profiles/addProfile`, {
+            // console.log(`'${name}' (${props.email}) at ${college} with year ${year}`);
+            fetch(`${server}/api/profiles/addProfile`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -96,7 +93,7 @@ const AddProfile = (props: {
                 })
             })
             .then(registerSuccess)
-            .catch(registerFailure);*/
+            .catch(registerFailure);
         }
     };
 
