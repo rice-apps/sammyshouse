@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import { Button, View, StyleSheet, Text, TextInput } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 
+// TODO: figure out server address
+const server: string = "http://localhost:3000";
+
 type College = "Baker" | "Will Rice" | "Hanszen" |
     "Wiess" | "Jones" | "Brown" | "Lovett" |
     "Sid Rich" | "Martel" | "McMurtry" | "Duncan";
@@ -42,8 +45,16 @@ const AddProfile = (props: {
 
     const [name, setName] = useState("");
     const [college, setCollege] = useState<College | undefined>();
-    const [year, setYear] = useState(0); // TODO: check
+    const [year, setYear] = useState(0);
     const [photo, setPhoto] = useState<string | undefined>();
+
+    const registerSuccess = (res) => {
+        console.log("Successfully registered");
+    }
+
+    const registerFailure = (err) => {
+        console.log(`Error: ${err}`);
+    }
 
     const register = () => {
         // TODO: real error handling
@@ -54,7 +65,22 @@ const AddProfile = (props: {
         } else if (year == 0) {
             console.log("You must select your graduation year");
         } else {
-            console.log(`'${name}' (${props.email}) at ${college} with year ${year}`);
+            // console.log(`'${name}' (${props.email}) at ${college} with year ${year}`);
+            fetch(`${server}/api/profiles/addProfile`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'name': name,
+                    'email': props.email,
+                    'college': college,
+                    'year': year,
+                    'photo': "" // TODO: photo handling
+                })
+            })
+            .then(registerSuccess)
+            .catch(registerFailure);
         }
     };
 
