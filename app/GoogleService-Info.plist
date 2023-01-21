@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>898951963333-pclbscskf53rj8vg5e4sqvsedguvo74l.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.898951963333-pclbscskf53rj8vg5e4sqvsedguvo74l</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBgYaWW4j-IbjG4hvXGCPIHp1Cv8IPZzmY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>898951963333</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.riceapps.sammyshouse</string>
+	<key>PROJECT_ID</key>
+	<string>sammyshouse</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sammyshouse.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:898951963333:ios:e2de4af802b94b289a46ac</string>
+</dict>
+</plist>

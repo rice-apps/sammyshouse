@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import EventCard, { eventCardFromData, parseEvent } from './EventCard/EventCard';
 import IEvent from './IEvent';
+import Login from './pages/Login';
 
 export default function App() {
   const [data, setData] : [IEvent[], any] = useState([]);
@@ -29,7 +30,8 @@ export default function App() {
   }
   return (
     <View style={styles.container}>
-      {data.map(e => eventCardFromData(e, onPress, onLike))}
+      {/*data.map(e => eventCardFromData(e, onPress, onLike))*/}
+      <Login></Login>
       <StatusBar style="auto" />
     </View>
   );
