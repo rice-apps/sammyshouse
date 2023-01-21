@@ -32,9 +32,8 @@ for (let i = 0; i < 6; i++) {
     yearData.push({ label: graduation.toString(), value: graduation });
 }
 
-// TODO: take email as a prop
 const AddProfile = (props: {
-
+    email: string,
 }) => {
     const [fontsLoaded] = useFonts({
         Inter: require('./assets/fonts/Inter-Regular.otf'),
@@ -47,7 +46,7 @@ const AddProfile = (props: {
     const [photo, setPhoto] = useState<string | undefined>();
 
     const register = () => {
-        console.log(`'${name}' at ${college} with year ${year}`);
+        console.log(`'${name}' (${props.email}) at ${college} with year ${year}`);
     };
 
     if (!fontsLoaded) {

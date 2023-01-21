@@ -35,7 +35,7 @@ export default function App() {
     </View>
   );*/
   return (
-    <AddProfile />
+    <AddProfile email="person@rice.edu"/>
   )
 }
 
