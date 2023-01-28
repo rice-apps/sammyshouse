@@ -116,7 +116,7 @@ const AddProfile = (props: AddProfileProps) => {
         <View style={styles.container}>
             {/* TODO: add picture adder */}
             <View>
-                <Text style={[Styles.darkColor, styles.largeText]}>Welcome, {props.route.params.email}</Text>
+                <Text style={[Styles.darkColor, styles.largeText]}>Welcome,</Text>
                 <View style={styles.nameContainer}>
                     <TextInput placeholder="Name" placeholderTextColor="grey" maxLength={MAX_NAME_LENGTH}
                         style={[Styles.darkColor, styles.largeText, styles.name]}
