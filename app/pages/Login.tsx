@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { View } from 'react-native';
+/*
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import {
@@ -94,3 +96,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+*/
+
+export default function Login() {
+    return (<View></View>);
+};

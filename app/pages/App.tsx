@@ -50,7 +50,7 @@ function Home({ navigation }) {
         })}   
       />
       <Button
-        title="Add Profile"
+        title="Add Event"
         onPress={() => navigation.navigate('Add Event')}
       />
       <Button
