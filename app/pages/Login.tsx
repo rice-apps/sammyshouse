@@ -2,18 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-  SignInParams,
-  User,
+    GoogleSignin,
+    GoogleSigninButton,
+    statusCodes,
+    SignInParams,
+    User,
 } from "@react-native-google-signin/google-signin";
 
-export default function Login() {
+export default function Login({ navigation }) {
     GoogleSignin.configure({
         iosClientId: '898951963333-pclbscskf53rj8vg5e4sqvsedguvo74l.apps.googleusercontent.com'
     });
-    
+    useEffect(() => {
+        GoogleSignin.signInSilently().then((userInfo) => {
+            setUserInfo(userInfo);
+            setSigninInProgress(true);
+        }).catch((error) => {
+            console.log(error);
+        });
+        
+    }, []);
+
     const [signinInProgress, setSigninInProgress] = useState(false);
     // const [email, setEmail] = useState("Not signed in");
     const [userInfo, setUserInfo] = useState<User>(null);
@@ -33,16 +42,16 @@ export default function Login() {
             } else {
                 setUserInfo(userInfo);
             }
-            
+
         } catch (error) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-            // user cancelled the login flow
+                // user cancelled the login flow
             } else if (error.code === statusCodes.IN_PROGRESS) {
-            // operation (e.g. sign in) is in progress already
+                // operation (e.g. sign in) is in progress already
             } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-            // play services not available or outdated
+                // play services not available or outdated
             } else {
-            // some other error happened
+                // some other error happened
             }
         }
     }
@@ -57,10 +66,10 @@ export default function Login() {
     }
 
     // Try to sign in the user in case they've already signed in
-    GoogleSignin.signInSilently().then((userInfo) => {
-        setUserInfo(userInfo);
-        setSigninInProgress(true);
-    });
+    // GoogleSignin.signInSilently().then((userInfo) => {
+    //     setUserInfo(userInfo);
+    //     setSigninInProgress(true);
+    // });
 
     return (
         <View style={styles.container}>
@@ -71,7 +80,7 @@ export default function Login() {
                 color={GoogleSigninButton.Color.Dark}
                 onPress={signIn}
                 disabled={signinInProgress}
-                />
+            />
             <Button title="sign out" onPress={signOut}></Button>
         </View>
     );

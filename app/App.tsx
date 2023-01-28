@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import EventCard, { eventCardFromData, parseEvent } from './EventCard/EventCard';
 import IEvent from './IEvent';
 import Login from './pages/Login';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function App() {
+const Stack = createNativeStackNavigator();
+
+function Home({ navigation }) {
   const [data, setData] : [IEvent[], any] = useState([]);
   useEffect(() => {
    fetch('http://localhost:3000/api/events/getAllEvents')
@@ -30,8 +34,11 @@ export default function App() {
   }
   return (
     <View style={styles.container}>
-      {/*data.map(e => eventCardFromData(e, onPress, onLike))*/}
-      <Login></Login>
+      {data.map(e => eventCardFromData(e, onPress, onLike))}
+      <Button
+        title="Login"
+        onPress={() => navigation.navigate('Login')}
+      />
       <StatusBar style="auto" />
     </View>
   );
@@ -45,3 +52,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Login" component={Login} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
