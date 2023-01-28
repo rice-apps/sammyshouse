@@ -5,8 +5,9 @@ import { Button, View, StyleSheet, Text, TextInput } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Theme, Styles } from './Theme';
 
-// TODO: figure out server address
+// TODO: figure out below constants
 const server: string = "http://localhost:3000";
+const MAX_NAME_LENGTH: number = 20;
 
 type College = "Baker" | "Will Rice" | "Hanszen" |
     "Wiess" | "Jones" | "Brown" | "Lovett" |
@@ -116,7 +117,8 @@ const AddProfile = (props: {
             <View>
                 <Text style={[Styles.darkColor, styles.largeText]}>Welcome,</Text>
                 <View style={styles.nameContainer}>
-                    <TextInput placeholder="Name" placeholderTextColor="grey" style={[Styles.darkColor, styles.largeText, styles.name]}
+                    <TextInput placeholder="Name" placeholderTextColor="grey" maxLength={MAX_NAME_LENGTH}
+                        style={[Styles.darkColor, styles.largeText, styles.name]}
                         onChangeText={text => {
                             setName(text);
                             if (text.length > 0)
@@ -124,7 +126,7 @@ const AddProfile = (props: {
                             else
                                 setNameError(true);
                         }}></TextInput>
-                    <Octicons name="pencil" size={15} color="grey" style={{paddingBottom: 5}}/>
+                    <Octicons name="pencil" size={20} color="grey" style={{paddingBottom: 5}}/>
                 </View>
                 {displayError(nameError)}
             </View>
@@ -175,12 +177,12 @@ const styles = StyleSheet.create({
     },
     name: {
         textDecorationLine: "underline",
-        flexBasis: 1,
-        flexShrink: 5,
+        width: "10%",
     },
     nameContainer: {
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "flex-start",
         alignItems: "flex-end",
+        columnGap: 10,
     }
 });
