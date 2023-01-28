@@ -41,7 +41,7 @@ const AddEvent = () => {
       />
 
       {/* dropdowns for month, day, year */}
-      {/* 
+      {/*
       <SelectDropdown
         data = {months}
         onSelect={(selectedItem, index) => {
@@ -52,16 +52,17 @@ const AddEvent = () => {
         rowTextForSelection={(item, index) => {
         }}
       />
-      */}
-        
+      
       <TouchableOpacity
         style={styles.button}
         onPress={toggleDropdown}
       >
         {renderDropdown()}
         <Text style={styles.buttonText}>Month</Text>
-        {/* <Icon type='font-awesome' name='chevron-down'/> */}
       </TouchableOpacity>
+      */}
+
+      {/* return (<Picker />); */}
       
       {/* line for location */}
       <TextInput
