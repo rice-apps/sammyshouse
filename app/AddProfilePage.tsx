@@ -3,7 +3,7 @@ import { Octicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Button, View, StyleSheet, Text, TextInput } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
-import { Styles } from './Theme';
+import { Theme, Styles } from './Theme';
 
 // TODO: figure out server address
 const server: string = "http://localhost:3000";
@@ -114,9 +114,9 @@ const AddProfile = (props: {
         <View style={styles.container}>
             {/* TODO: add picture adder */}
             <View>
-                <Text style={Styles.darkMainColor}>Welcome,</Text>
-                <View style={styles.row}>
-                    <TextInput placeholder="Name" placeholderTextColor="grey" style={[Styles.darkMainColor, styles.name]}
+                <Text style={[Styles.darkColor, styles.largeText]}>Welcome,</Text>
+                <View style={styles.nameContainer}>
+                    <TextInput placeholder="Name" placeholderTextColor="grey" style={[Styles.darkColor, styles.largeText, styles.name]}
                         onChangeText={text => {
                             setName(text);
                             if (text.length > 0)
@@ -124,7 +124,7 @@ const AddProfile = (props: {
                             else
                                 setNameError(true);
                         }}></TextInput>
-                    <Octicons name="pencil" size={15} color="grey" />
+                    <Octicons name="pencil" size={15} color="grey" style={{paddingBottom: 5}}/>
                 </View>
                 {displayError(nameError)}
             </View>
@@ -156,10 +156,11 @@ export default AddProfile;
 const styles = StyleSheet.create({
     container: {
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "flex-start",
         justifyContent: "center",
         height: "100%",
-        width: "100%"
+        width: "100%",
+        marginLeft: 10,
     },
     row: {
         flexDirection: "row"
@@ -167,7 +168,19 @@ const styles = StyleSheet.create({
     error: {
 
     },
+    largeText: {
+        fontFamily: "Inter",
+        fontSize: 40,
+        fontWeight: "bold",
+    },
     name: {
         textDecorationLine: "underline",
+        flexBasis: 1,
+        flexShrink: 5,
+    },
+    nameContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-end",
     }
 });

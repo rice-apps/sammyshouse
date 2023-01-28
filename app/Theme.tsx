@@ -6,7 +6,7 @@ const Theme = {
     mainColor: function() {
         return this.mediumBlue;
     },
-    darkMainColor: function() {
+    darkColor: function() {
         return this.darkBlue;
     }
 }
@@ -15,8 +15,8 @@ const Styles = StyleSheet.create({
     mainColor: {
         color: Theme.mainColor(),
     },
-    darkMainColor: {
-        color: Theme.darkMainColor(),
+    darkColor: {
+        color: Theme.darkColor(),
     }
 });
 
