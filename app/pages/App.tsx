@@ -8,6 +8,7 @@ import Login from './Login';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AddEvent from './AddEventPage';
+import EventPage from './EventPage';
 
 
 const Stack = createNativeStackNavigator();
@@ -52,6 +53,10 @@ function Home({ navigation }) {
         title="Add Profile"
         onPress={() => navigation.navigate('Add Event')}
       />
+      <Button
+        title="Event Page"
+        onPress={() => navigation.navigate('Event Page')}
+      />
       <StatusBar style="auto" />
     </View>
   );
@@ -77,6 +82,8 @@ export default function App() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Add Profile" component={AddProfile}/>
         <Stack.Screen name="Add Event" component={AddEvent}/>
+        <Stack.Screen name="Event Page" component={EventPage}/>
+
       </Stack.Navigator>
     </NavigationContainer>
   );
