@@ -7,6 +7,7 @@ import AddProfile from './AddProfilePage';
 import Login from './Login';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AddEvent from './AddEventPage';
 
 
 const Stack = createNativeStackNavigator();
@@ -45,9 +46,12 @@ function Home({ navigation }) {
         title="Add Profile"
         onPress={() => navigation.navigate('Add Profile', {
           email: 'test@rice.edu',
-        })}
+        })}   
       />
-      {/* <AddProfile email="person@rice.edu"/> */}
+      <Button
+        title="Add Profile"
+        onPress={() => navigation.navigate('Add Event')}
+      />
       <StatusBar style="auto" />
     </View>
   );
@@ -72,6 +76,7 @@ export default function App() {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Add Profile" component={AddProfile}/>
+        <Stack.Screen name="Add Event" component={AddEvent}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
