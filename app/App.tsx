@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import EventCard, { eventCardFromData, parseEvent } from './EventCard/EventCard';
 import IEvent from './IEvent';
 import AddProfile from './AddProfilePage';
+import Login from './pages/Login';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';\
 
-export default function App() {
-  /*const [data, setData] : [IEvent[], any] = useState([]);
+
+const Stack = createNativeStackNavigator();
+
+function Home({ navigation }) {
+  const [data, setData] : [IEvent[], any] = useState([]);
   useEffect(() => {
-   fetch('http://localhost:3000/api/getAllEvents')
+   fetch('http://localhost:3000/api/events/getAllEvents')
     .then(res => res.json())
     .then(events => events.map(parseEvent))
     .then(events => setData(events))
     .catch(e => console.log(e));
-  }, []);*/
+  }, []);
   /*
       <EventCard data={{
         eventName: 'Test Event',
@@ -22,7 +28,7 @@ export default function App() {
         dateTime: new Date('15 December 2022 1:48 PM')
       }} onPress={() => console.log("pressed")} onLike={(liked) => console.log(`liked: ${liked}`)}/>
   */
-  /*const onPress = (_id: string) => {
+  const onPress = (_id: string) => {
     console.log(`event card with id ${_id} was pressed`);
   };
   const onLike = (_id: string, liked: boolean) => {
@@ -31,19 +37,35 @@ export default function App() {
   return (
     <View style={styles.container}>
       {data.map(e => eventCardFromData(e, onPress, onLike))}
+      <Button
+        title="Login"
+        onPress={() => navigation.navigate('Login')}
+      />
+      <AddProfile email="person@rice.edu"/>
       <StatusBar style="auto" />
     </View>
-  );*/
-  return (
-    <AddProfile email="person@rice.edu"/>
-  )
+  );
+  
+    
+ 
 }
 
 /*const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
 });*/
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Login" component={Login} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
