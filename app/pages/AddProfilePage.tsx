@@ -131,22 +131,18 @@ const AddProfile = (props: AddProfileProps) => {
                 </View>
                 {displayError(nameError)}
             </View>
-            <View>
-                <View style={styles.row}>
-                    <Dropdown placeholder="College" data={collegeData} labelField="item" valueField="item" onChange={obj => {
-                        setCollege(obj.item);
-                        setCollegeError(false)
-                    }} />
-                </View>
+            <View style={styles.fillWidth}>
+                <Dropdown placeholder="College" data={collegeData} labelField="item" valueField="item" onChange={obj => {
+                    setCollege(obj.item);
+                    setCollegeError(false)
+                }} style={styles.dropdown} />
                 {displayError(collegeError)}
             </View>
-            <View>
-                <View style={styles.row}>
-                    <Dropdown placeholder="Year" data={yearData} labelField="label" valueField="value" onChange={obj => {
-                        setYear(obj.value);
-                        setYearError(false)
-                    }} />
-                </View>
+            <View style={styles.fillWidth}>
+                <Dropdown placeholder="Year" data={yearData} labelField="label" valueField="value" onChange={obj => {
+                    setYear(obj.value);
+                    setYearError(false)
+                }} style={styles.dropdown}/>
                 {displayError(yearError)}
             </View>
             <Button title="Next" onPress={register}/>
@@ -165,8 +161,8 @@ const styles = StyleSheet.create({
         width: "100%",
         marginLeft: 10,
     },
-    row: {
-        flexDirection: "row"
+    fillWidth: {
+        width: "95%"
     },
     error: {
 
@@ -178,12 +174,14 @@ const styles = StyleSheet.create({
     },
     name: {
         textDecorationLine: "underline",
-        width: "10%",
     },
     nameContainer: {
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "flex-end",
         columnGap: 10,
-    }
+    },
+    dropdown: {
+        width: "100%",
+    },
 });
