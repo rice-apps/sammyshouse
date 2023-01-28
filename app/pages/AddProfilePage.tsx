@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Button, View, StyleSheet, Text, TextInput } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Theme, Styles } from './Theme';
+import { AddProfileProps } from '../types/PropTypes';
 
 // TODO: figure out below constants
 const server: string = "http://localhost:3000";
@@ -37,12 +38,12 @@ for (let i = 0; i < 6; i++) {
     yearData.push({ label: graduation.toString(), value: graduation });
 }
 
-const AddProfile = (props: {
-    email: string,
-}) => {
+const AddProfile = (props: AddProfileProps) => {
+    const { email } = props.route.params;
+
     const [fontsLoaded] = useFonts({
-        Inter: require('./assets/fonts/Inter-Regular.otf'),
-        InterBold: require('./assets/fonts/Inter-Bold.otf')
+        Inter: require('../assets/fonts/Inter-Regular.otf'),
+        InterBold: require('../assets/fonts/Inter-Bold.otf')
     });
 
     const [name, setName] = useState("");
@@ -88,7 +89,7 @@ const AddProfile = (props: {
                 },
                 body: JSON.stringify({
                     'name': name,
-                    'email': props.email,
+                    'email': email,
                     'college': college,
                     'year': year,
                     'photo': "" // TODO: photo handling
@@ -115,7 +116,7 @@ const AddProfile = (props: {
         <View style={styles.container}>
             {/* TODO: add picture adder */}
             <View>
-                <Text style={[Styles.darkColor, styles.largeText]}>Welcome,</Text>
+                <Text style={[Styles.darkColor, styles.largeText]}>Welcome, {props.route.params.email}</Text>
                 <View style={styles.nameContainer}>
                     <TextInput placeholder="Name" placeholderTextColor="grey" maxLength={MAX_NAME_LENGTH}
                         style={[Styles.darkColor, styles.largeText, styles.name]}

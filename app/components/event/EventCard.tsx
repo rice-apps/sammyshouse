@@ -2,8 +2,8 @@ import { useFonts } from 'expo-font';
 import { AntDesign, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
-import IEventCardData from './IEventCardData';
-import IEvent, { IEventIntermediate } from '../IEvent';
+import IEventCardData from '../../types/IEventCardData';
+import IEvent, { IEventIntermediate } from '../../types/IEvent';
 
 const defaultImageURI: string = 'https://brand.rice.edu/sites/g/files/bxs2591/files/2019-08/190308_Rice_Mechanical_Brand_Standards_Logos-2.png';
 const defaultLocation: string = 'Unknown';
@@ -81,8 +81,8 @@ const EventCard = (props: {
     onLike?: (_id: string, liked: boolean) => void
 }) => {
     const [fontsLoaded] = useFonts({
-        Inter: require('../assets/fonts/Inter-Regular.otf'),
-        InterBold: require('../assets/fonts/Inter-Bold.otf')
+        Inter: require('../../assets/fonts/Inter-Regular.otf'),
+        InterBold: require('../../assets/fonts/Inter-Bold.otf')
     });
     const [liked, setLiked] = useState(false);
 

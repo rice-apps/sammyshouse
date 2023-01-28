@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import EventCard, { eventCardFromData, parseEvent } from './EventCard/EventCard';
-import IEvent from './IEvent';
+import EventCard, { eventCardFromData, parseEvent } from '../components/event/EventCard';
+import IEvent from '../types/IEvent';
 import AddProfile from './AddProfilePage';
-import Login from './pages/Login';
+import Login from './Login';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';\
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 const Stack = createNativeStackNavigator();
@@ -41,7 +41,13 @@ function Home({ navigation }) {
         title="Login"
         onPress={() => navigation.navigate('Login')}
       />
-      <AddProfile email="person@rice.edu"/>
+        <Button
+        title="Add Profile"
+        onPress={() => navigation.navigate('Add Profile', {
+          email: 'test@rice.edu',
+        })}
+      />
+      {/* <AddProfile email="person@rice.edu"/> */}
       <StatusBar style="auto" />
     </View>
   );
@@ -50,14 +56,14 @@ function Home({ navigation }) {
  
 }
 
-/*const styles = StyleSheet.create({
+ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
-});*/
+});
 
 export default function App() {
   return (
@@ -65,6 +71,7 @@ export default function App() {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Add Profile" component={AddProfile}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
