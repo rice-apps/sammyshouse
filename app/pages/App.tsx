@@ -7,13 +7,16 @@ import AddProfile from './AddProfilePage';
 import Login from './Login';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AddEvent from './AddEventPage';
 import EventPage from './EventPage';
 
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
-function Home({ navigation }) {
+function HomePage({ navigation }) {
   const [data, setData] : [IEvent[], any] = useState([]);
   useEffect(() => {
    fetch('http://localhost:3000/api/events/getAllEvents')
@@ -65,6 +68,18 @@ function Home({ navigation }) {
  
 }
 
+function Home() {
+  return (
+    <Stack.Navigator initialRouteName="HomePage">
+        <Stack.Screen name="HomePage" component={HomePage} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Add Profile" component={AddProfile}/>
+        <Stack.Screen name="Add Event" component={AddEvent}/>
+        <Stack.Screen name="Event Page" component={EventPage}/>
+      </Stack.Navigator>
+  );
+}
+
  const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -77,14 +92,28 @@ function Home({ navigation }) {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Add Profile" component={AddProfile}/>
-        <Stack.Screen name="Add Event" component={AddEvent}/>
-        <Stack.Screen name="Event Page" component={EventPage}/>
-
-      </Stack.Navigator>
+      <Tab.Navigator screenOptions={{
+        headerShown: false
+      }}>
+        <Tab.Screen name="Home" component={Home} options={{
+          tabBarShowLabel: false,
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }} />
+        <Tab.Screen name="Add Event" component={AddEvent} options={{
+            tabBarShowLabel: false,
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="plus-circle-outline" color={color} size={size} />
+            ),
+          }} />
+        <Tab.Screen name="Profile" component={AddProfile} initialParams={{email: 'test@rice.edu'}} options={{
+            tabBarShowLabel: false,
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="account" color={color} size={size} />
+            ),
+          }} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }

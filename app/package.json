@@ -11,6 +11,7 @@
     "@expo/webpack-config": "^0.17.0",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-google-signin/google-signin": "^8.2.1",
+    "@react-navigation/bottom-tabs": "^6.5.4",
     "@react-navigation/native": "^6.1.2",
     "@react-navigation/native-stack": "^6.9.8",
     "@types/jest": "^29.1.2",
