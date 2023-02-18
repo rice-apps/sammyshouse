@@ -118,10 +118,10 @@ const AddProfile = (props: AddProfileProps) => {
 
     return (
         <View style={styles.container}>
-            <View>
+            <View style={styles.header}>
                 <Text style={[Styles.darkColor, styles.largeText]}>Welcome,</Text>
                 <View style={styles.nameContainer}>
-                    <TextInput placeholder="Name" placeholderTextColor="grey" maxLength={MAX_NAME_LENGTH}
+                    <TextInput placeholder="Name" placeholderTextColor={Theme.darkGreyColor()} maxLength={MAX_NAME_LENGTH}
                         style={[Styles.darkColor, styles.largeText, styles.name]}
                         onChangeText={text => {
                             setName(text);
@@ -130,7 +130,7 @@ const AddProfile = (props: AddProfileProps) => {
                             else
                                 setNameError(true);
                         }}></TextInput>
-                    <Octicons name="pencil" size={20} color="grey" style={{paddingBottom: 5}}/>
+                    <Octicons name="pencil" size={20} color="grey" style={{paddingBottom: 5, flexGrow: 0}}/>
                 </View>
                 {displayError(nameError)}
             </View>
@@ -193,17 +193,24 @@ const styles = StyleSheet.create({
     },
     largeText: {
         fontFamily: "Inter",
-        fontSize: 40,
+        fontSize: 34,
         fontWeight: "bold",
     },
     name: {
         textDecorationLine: "underline",
+        width: "50%",
+        flexGrow: 1,
     },
     nameContainer: {
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "flex-end",
+        width: "90%",
         columnGap: 10,
+    },
+    header: {
+        marginLeft: "10%",
+        width: "90%",
     },
     cameraCircle: {
         width: 174,
