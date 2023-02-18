@@ -1,5 +1,5 @@
 import { useFonts } from 'expo-font';
-import { Octicons } from '@expo/vector-icons';
+import { MaterialIcons, Octicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Pressable, View, StyleSheet, Text, TextInput } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -107,10 +107,13 @@ const AddProfile = (props: AddProfileProps) => {
         return (<></>);
     };
 
+    const dropdownIcon = (_?: boolean) => {
+        return (<MaterialIcons name="keyboard-arrow-down" size={24} color={Theme.mainColor()} style={styles.dropdownIcon}/>);
+    };
+
     if (!fontsLoaded) {
         return null;
     }
-
 
     return (
         <View style={styles.container}>
@@ -135,14 +138,18 @@ const AddProfile = (props: AddProfileProps) => {
                 <Dropdown placeholder="College" data={collegeData} labelField="item" valueField="item" onChange={obj => {
                     setCollege(obj.item);
                     setCollegeError(false)
-                }} style={styles.dropdown} />
+                }} fontFamily="Inter" selectedTextStyle={[styles.dropdownItem, styles.dropdownSelected]}
+                itemTextStyle={styles.dropdownItem} placeholderStyle={[styles.dropdownItem, styles.dropdownSelected]}
+                renderRightIcon={dropdownIcon} style={[styles.dropdown, {marginBottom: 15}]} />
                 {displayError(collegeError)}
             </View>
             <View style={styles.fillWidth}>
                 <Dropdown placeholder="Year" data={yearData} labelField="label" valueField="value" onChange={obj => {
                     setYear(obj.value);
                     setYearError(false)
-                }} style={styles.dropdown}/>
+                }} fontFamily="Inter" selectedTextStyle={[styles.dropdownItem, styles.dropdownSelected]}
+                itemTextStyle={styles.dropdownItem} placeholderStyle={[styles.dropdownItem, styles.dropdownSelected]}
+                renderRightIcon={dropdownIcon} style={styles.dropdown}/>
                 {displayError(yearError)}
             </View>
             <View style={styles.bottom}>
@@ -163,15 +170,17 @@ export default AddProfile;
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: "#ffffff",
         flexDirection: "column",
         alignItems: "flex-start",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         height: "100%",
         width: "100%",
         marginLeft: 10,
     },
     fillWidth: {
-        width: "95%"
+        width: "95%",
+        alignItems: 'center'
     },
     error: {
 
@@ -191,7 +200,22 @@ const styles = StyleSheet.create({
         columnGap: 10,
     },
     dropdown: {
-        width: "100%",
+        width: "80%",
+        borderWidth: 2,
+        borderColor: Theme.greyColor(),
+        borderRadius: 10,
+        paddingVertical: 3,
+    },
+    dropdownItem: {
+        color: Theme.darkGreyColor(),
+        fontSize: 16,
+        fontWeight: "400",
+    },
+    dropdownSelected: {
+        marginLeft: "5%",
+    },
+    dropdownIcon: {
+        paddingRight: "5%",
     },
     button: {
        backgroundColor: Theme.mainColor(),
