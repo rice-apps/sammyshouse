@@ -7,13 +7,11 @@ const ProfilePage = () => {
     <View>
       <HStack justifyContent="center" space={2}>
       <Avatar 
-          title = "Allen"
           bg="green.500" 
           source={{
           uri: "https://picsum.photos/700"}}>
       </Avatar>
       </HStack>
-      
       <Text variant="bodyMedium"> BIO </Text>
       <Box alignItems="center">
             <Flex mx="3" direction="row" justify="space-evenly" h="30">
