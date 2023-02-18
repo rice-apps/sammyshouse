@@ -53,6 +53,7 @@ const AddProfile = (props: AddProfileProps) => {
     const [nameError, setNameError] = useState(false);
     const [collegeError, setCollegeError] = useState(false);
     const [yearError, setYearError] = useState(false);
+    const [nextPressed, setNextPressed] = useState(false);
 
     const registerSuccess = (res) => {
         console.log("Successfully registered");
@@ -117,7 +118,6 @@ const AddProfile = (props: AddProfileProps) => {
 
     return (
         <View style={styles.container}>
-            {/* TODO: add picture adder */}
             <View>
                 <Text style={[Styles.darkColor, styles.largeText]}>Welcome,</Text>
                 <View style={styles.nameContainer}>
@@ -135,6 +135,12 @@ const AddProfile = (props: AddProfileProps) => {
                 {displayError(nameError)}
             </View>
             <View style={styles.fillWidth}>
+                <View style={styles.cameraCircle}>
+                    <MaterialIcons name="photo-camera" size={74} color={Theme.darkColor()} />
+                </View>
+                <Text style={styles.profilePicText}>Add profile picture</Text>
+            </View>
+            <View style={styles.fillWidth}>
                 <Dropdown placeholder="College" data={collegeData} labelField="item" valueField="item" onChange={obj => {
                     setCollege(obj.item);
                     setCollegeError(false)
@@ -142,8 +148,6 @@ const AddProfile = (props: AddProfileProps) => {
                 itemTextStyle={styles.dropdownItem} placeholderStyle={[styles.dropdownItem, styles.dropdownSelected]}
                 renderRightIcon={dropdownIcon} style={[styles.dropdown, {marginBottom: 15}]} />
                 {displayError(collegeError)}
-            </View>
-            <View style={styles.fillWidth}>
                 <Dropdown placeholder="Year" data={yearData} labelField="label" valueField="value" onChange={obj => {
                     setYear(obj.value);
                     setYearError(false)
@@ -158,7 +162,9 @@ const AddProfile = (props: AddProfileProps) => {
                     <View style={styles.middleSection}></View>
                     <View style={styles.lastSection}></View>
                 </View>
-                <Pressable onPress={register} style={styles.button}>
+                <Pressable style={[styles.button, {
+                    backgroundColor: (nextPressed ? Theme.greyColor() : Theme.mainColor())
+                }]} onPress={register} onPressIn={(_) => setNextPressed(true)} onPressOut={(_) => setNextPressed(false)}>
                     <Text style={styles.buttonText}>Next</Text>
                 </Pressable>
             </View>
@@ -173,7 +179,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
         flexDirection: "column",
         alignItems: "flex-start",
-        justifyContent: "flex-start",
+        justifyContent: "space-around",
         height: "100%",
         width: "100%",
         marginLeft: 10,
@@ -199,6 +205,21 @@ const styles = StyleSheet.create({
         alignItems: "flex-end",
         columnGap: 10,
     },
+    cameraCircle: {
+        width: 174,
+        height: 174,
+        borderRadius: 174/2,
+        borderWidth: 2,
+        borderColor: Theme.darkColor(),
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    profilePicText: {
+        fontFamily: "Inter",
+        fontSize: 14,
+        color: Theme.darkColor(),
+        paddingTop: 10,
+    },
     dropdown: {
         width: "80%",
         borderWidth: 2,
@@ -218,7 +239,6 @@ const styles = StyleSheet.create({
         paddingRight: "5%",
     },
     button: {
-       backgroundColor: Theme.mainColor(),
        borderRadius: 5,
        paddingLeft: '10%',
        paddingRight: '10%',
