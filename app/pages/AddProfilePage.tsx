@@ -122,7 +122,7 @@ const AddProfile = (props: AddProfileProps) => {
                 <Text style={[Styles.darkColor, styles.largeText]}>Welcome,</Text>
                 <View style={styles.nameContainer}>
                     <TextInput placeholder="Name" placeholderTextColor={Theme.darkGreyColor()} maxLength={MAX_NAME_LENGTH}
-                        style={[Styles.darkColor, styles.largeText, styles.name]}
+                        autoCapitalize="words" style={[Styles.darkColor, styles.largeText, styles.name]}
                         onChangeText={text => {
                             setName(text);
                             if (text.length > 0)
