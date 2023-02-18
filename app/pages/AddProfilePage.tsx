@@ -1,7 +1,7 @@
 import { useFonts } from 'expo-font';
 import { Octicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { Button, View, StyleSheet, Text, TextInput } from 'react-native';
+import { Pressable, View, StyleSheet, Text, TextInput } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Theme, Styles } from './Theme';
 import { AddProfileProps } from '../types/PropTypes';
@@ -145,7 +145,16 @@ const AddProfile = (props: AddProfileProps) => {
                 }} style={styles.dropdown}/>
                 {displayError(yearError)}
             </View>
-            <Button title="Next" onPress={register}/>
+            <View style={styles.bottom}>
+                <View style={styles.progress}>
+                    <View style={styles.firstSection}></View>
+                    <View style={styles.middleSection}></View>
+                    <View style={styles.lastSection}></View>
+                </View>
+                <Pressable onPress={register} style={styles.button}>
+                    <Text style={styles.buttonText}>Next</Text>
+                </Pressable>
+            </View>
         </View>
     );
 }
@@ -184,4 +193,49 @@ const styles = StyleSheet.create({
     dropdown: {
         width: "100%",
     },
+    button: {
+       backgroundColor: Theme.mainColor(),
+       borderRadius: 5,
+       paddingLeft: '10%',
+       paddingRight: '10%',
+       paddingTop: '2.5%',
+       paddingBottom: '2.5%',
+    },
+    buttonText: {
+        fontFamily: "Inter",
+        fontSize: 16,
+        color: "#ffffff",
+    },
+    bottom: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingLeft: "5%",
+        width: '90%',
+    },
+    progress: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    firstSection: {
+        backgroundColor: Theme.mainColor(),
+        height: 12,
+        width: 50,
+        borderTopLeftRadius: 6,
+        borderBottomLeftRadius: 6,
+        marginRight: 3,
+    },
+    middleSection: {
+        backgroundColor: Theme.greyColor(),
+        height: 12,
+        width: 50,
+        marginRight: 3,
+    },
+    lastSection: {
+        backgroundColor: Theme.greyColor(),
+        height: 12,
+        width: 50,
+        borderTopRightRadius: 6,
+        borderBottomRightRadius: 6
+    }
 });
