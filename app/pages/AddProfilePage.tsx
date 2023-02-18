@@ -182,7 +182,6 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         height: "100%",
         width: "100%",
-        marginLeft: 10,
     },
     fillWidth: {
         width: "95%",
