@@ -51,6 +51,7 @@ const AddProfile = (props: AddProfileProps) => {
     const [year, setYear] = useState(0);
     const [photo, setPhoto] = useState<string | undefined>();
     const [nameError, setNameError] = useState(false);
+    const [nameEmpty, setNameEmpty] = useState(true);
     const [collegeError, setCollegeError] = useState(false);
     const [yearError, setYearError] = useState(false);
     const [nextPressed, setNextPressed] = useState(false);
@@ -122,13 +123,18 @@ const AddProfile = (props: AddProfileProps) => {
                 <Text style={[Styles.darkColor, styles.largeText]}>Welcome,</Text>
                 <View style={styles.nameContainer}>
                     <TextInput placeholder="Name" placeholderTextColor={Theme.darkGreyColor()} maxLength={MAX_NAME_LENGTH}
-                        autoCapitalize="words" style={[Styles.darkColor, styles.largeText, styles.name]}
+                        autoCapitalize="words" style={[styles.largeText, styles.name, {
+                            color: nameEmpty ? Theme.darkGreyColor() : Theme.darkColor()
+                        }]}
                         onChangeText={text => {
                             setName(text);
-                            if (text.length > 0)
+                            if (text.length > 0) {
                                 setNameError(false);
-                            else
+                                setNameEmpty(false);
+                            } else {
                                 setNameError(true);
+                                setNameEmpty(true);
+                            }
                         }}></TextInput>
                     <Octicons name="pencil" size={20} color="grey" style={{paddingBottom: 5, flexGrow: 0}}/>
                 </View>
