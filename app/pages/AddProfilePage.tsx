@@ -6,6 +6,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { Theme, Styles } from './Theme';
 import { AddProfileProps } from '../types/PropTypes';
 import ThreePageProgress from '../components/ThreePageProgress';
+import ThemedButton from '../components/ThemedButton';
 
 // TODO: figure out below constants
 const server: string = "http://localhost:3000";
@@ -94,6 +95,7 @@ const AddProfile = (props: AddProfileProps) => {
                                     yearError ? "Graduation year is required." : ""));
             Alert.alert("Please complete all fields.", errorMsg);
             console.log(`Please complete all fields: ${errorMsg}`);
+            setNextPressed(false);
         }
     };
 
@@ -143,11 +145,7 @@ const AddProfile = (props: AddProfileProps) => {
             </View>
             <View style={styles.bottom}>
                 <ThreePageProgress section={0} />
-                <Pressable style={[styles.button, {
-                    backgroundColor: (nextPressed ? Theme.greyColor() : Theme.mainColor())
-                }]} onPress={register} onPressIn={(_) => setNextPressed(true)}>
-                    <Text style={styles.buttonText}>Next</Text>
-                </Pressable>
+                <ThemedButton text="Next" pressed={nextPressed} onPress={register} onPressIn={() => setNextPressed(true)} />
             </View>
         </View>
     );
@@ -224,18 +222,6 @@ const styles = StyleSheet.create({
     },
     dropdownIcon: {
         paddingRight: "5%",
-    },
-    button: {
-       borderRadius: 5,
-       paddingLeft: '10%',
-       paddingRight: '10%',
-       paddingTop: '2.5%',
-       paddingBottom: '2.5%',
-    },
-    buttonText: {
-        fontFamily: "Inter",
-        fontSize: 16,
-        color: "#ffffff",
     },
     bottom: {
         flexDirection: 'row',
