@@ -8,6 +8,8 @@ import { AddProfileProps } from '../types/PropTypes';
 import ThreePageProgress from '../components/ThreePageProgress';
 import ThemedButton from '../components/ThemedButton';
 
+const isMVP = true;
+
 // TODO: figure out below constants
 const server: string = "http://localhost:3000";
 const MAX_NAME_LENGTH: number = 20;
@@ -144,8 +146,8 @@ const AddProfile = (props: AddProfileProps) => {
                 renderRightIcon={dropdownIcon} style={styles.dropdown}/>
             </View>
             <View style={styles.bottom}>
-                <ThreePageProgress section={0} />
-                <ThemedButton text="Next" pressed={nextPressed} onPress={register} onPressIn={() => setNextPressed(true)} />
+                {!isMVP && <ThreePageProgress section={0} />}
+                <ThemedButton text={isMVP ? "Create account" : "Next"} pressed={nextPressed} onPress={register} onPressIn={() => setNextPressed(true)} />
             </View>
         </View>
     );
@@ -225,7 +227,7 @@ const styles = StyleSheet.create({
     },
     bottom: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: isMVP ? 'flex-end' : 'space-between',
         alignItems: 'center',
         paddingLeft: "5%",
         width: '90%',
