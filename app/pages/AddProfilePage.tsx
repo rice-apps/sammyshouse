@@ -5,6 +5,7 @@ import { Alert, Pressable, View, StyleSheet, Text, TextInput } from 'react-nativ
 import { Dropdown } from 'react-native-element-dropdown';
 import { Theme, Styles } from './Theme';
 import { AddProfileProps } from '../types/PropTypes';
+import ThreePageProgress from '../components/ThreePageProgress';
 
 // TODO: figure out below constants
 const server: string = "http://localhost:3000";
@@ -141,11 +142,7 @@ const AddProfile = (props: AddProfileProps) => {
                 renderRightIcon={dropdownIcon} style={styles.dropdown}/>
             </View>
             <View style={styles.bottom}>
-                <View style={styles.progress}>
-                    <View style={styles.firstSection}></View>
-                    <View style={styles.middleSection}></View>
-                    <View style={styles.lastSection}></View>
-                </View>
+                <ThreePageProgress section={0} />
                 <Pressable style={[styles.button, {
                     backgroundColor: (nextPressed ? Theme.greyColor() : Theme.mainColor())
                 }]} onPress={register} onPressIn={(_) => setNextPressed(true)}>
@@ -247,29 +244,4 @@ const styles = StyleSheet.create({
         paddingLeft: "5%",
         width: '90%',
     },
-    progress: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    firstSection: {
-        backgroundColor: Theme.mainColor(),
-        height: 12,
-        width: 50,
-        borderTopLeftRadius: 6,
-        borderBottomLeftRadius: 6,
-        marginRight: 3,
-    },
-    middleSection: {
-        backgroundColor: Theme.greyColor(),
-        height: 12,
-        width: 50,
-        marginRight: 3,
-    },
-    lastSection: {
-        backgroundColor: Theme.greyColor(),
-        height: 12,
-        width: 50,
-        borderTopRightRadius: 6,
-        borderBottomRightRadius: 6
-    }
 });
