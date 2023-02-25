@@ -1,7 +1,7 @@
 import { useFonts } from 'expo-font';
 import { MaterialIcons, Octicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { Pressable, View, StyleSheet, Text, TextInput } from 'react-native';
+import { Alert, Pressable, View, StyleSheet, Text, TextInput } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Theme, Styles } from './Theme';
 import { AddProfileProps } from '../types/PropTypes';
@@ -50,39 +50,27 @@ const AddProfile = (props: AddProfileProps) => {
     const [college, setCollege] = useState<College | undefined>();
     const [year, setYear] = useState(0);
     const [photo, setPhoto] = useState<string | undefined>();
-    const [nameError, setNameError] = useState(false);
-    const [nameEmpty, setNameEmpty] = useState(true);
-    const [collegeError, setCollegeError] = useState(false);
-    const [yearError, setYearError] = useState(false);
+    const [nameError, setNameError] = useState(true);
+    const [collegeError, setCollegeError] = useState(true);
+    const [yearError, setYearError] = useState(true);
     const [nextPressed, setNextPressed] = useState(false);
 
     const registerSuccess = (res) => {
+        setNextPressed(false);
         console.log("Successfully registered");
     }
 
     const registerFailure = (err) => {
-        console.log(`Error: ${err}`);
+        setNextPressed(false);
+        console.log(`Registration Error: ${err.toString()}`);
+        Alert.alert("Registration Error", err.toString());
     }
 
     const register = () => {
-        // TODO: real error handling
-        let error = false;
-        setNameError(false);
-        setCollegeError(false);
-        setYearError(false);
-        if (name.length == 0) {
-            setNameError(true);
-            error = true;
-        }
-        if (college == undefined) {
-            setCollegeError(true);
-            error = true;
-        }
-        if (year == 0) {
-            setYearError(true);
-            error = true;
-        }
-        if (!error) {
+        setNameError(name.length == 0 || nameError);
+        setCollegeError(college == undefined || collegeError);
+        setYearError(year == 0 || yearError);
+        if (!nameError && !collegeError && !yearError) {
             // console.log(`'${name}' (${props.email}) at ${college} with year ${year}`);
             fetch(`${server}/api/profiles/addProfile`, {
                 method: "POST",
@@ -99,14 +87,13 @@ const AddProfile = (props: AddProfileProps) => {
             })
             .then(registerSuccess)
             .catch(registerFailure);
+        } else {
+            const errorMsg = (nameError ? "Name is required." :
+                                (collegeError ? "Residential college is required." :
+                                    yearError ? "Graduation year is required." : ""));
+            Alert.alert("Please complete all fields.", errorMsg);
+            console.log(`Please complete all fields: ${errorMsg}`);
         }
-    };
-
-    const displayError = (show: boolean) => {
-        if (show) {
-            return (<Text style={styles.error}>This field is required.</Text>);
-        }
-        return (<></>);
     };
 
     const dropdownIcon = (_?: boolean) => {
@@ -124,21 +111,14 @@ const AddProfile = (props: AddProfileProps) => {
                 <View style={styles.nameContainer}>
                     <TextInput placeholder="Name" placeholderTextColor={Theme.darkGreyColor()} maxLength={MAX_NAME_LENGTH}
                         autoCapitalize="words" style={[styles.largeText, styles.name, {
-                            color: nameEmpty ? Theme.darkGreyColor() : Theme.darkColor()
+                            color: nameError ? Theme.darkGreyColor() : Theme.darkColor()
                         }]}
                         onChangeText={text => {
                             setName(text);
-                            if (text.length > 0) {
-                                setNameError(false);
-                                setNameEmpty(false);
-                            } else {
-                                setNameError(true);
-                                setNameEmpty(true);
-                            }
+                            setNameError(text.length <= 0);
                         }}></TextInput>
                     <Octicons name="pencil" size={20} color="grey" style={{paddingBottom: 5, flexGrow: 0}}/>
                 </View>
-                {displayError(nameError)}
             </View>
             <View style={styles.fillWidth}>
                 <View style={styles.cameraCircle}>
@@ -153,14 +133,12 @@ const AddProfile = (props: AddProfileProps) => {
                 }} fontFamily="Inter" selectedTextStyle={[styles.dropdownItem, styles.dropdownSelected]}
                 itemTextStyle={styles.dropdownItem} placeholderStyle={[styles.dropdownItem, styles.dropdownSelected]}
                 renderRightIcon={dropdownIcon} style={[styles.dropdown, {marginBottom: 15}]} />
-                {displayError(collegeError)}
                 <Dropdown placeholder="Year" data={yearData} labelField="label" valueField="value" onChange={obj => {
                     setYear(obj.value);
                     setYearError(false)
                 }} fontFamily="Inter" selectedTextStyle={[styles.dropdownItem, styles.dropdownSelected]}
                 itemTextStyle={styles.dropdownItem} placeholderStyle={[styles.dropdownItem, styles.dropdownSelected]}
                 renderRightIcon={dropdownIcon} style={styles.dropdown}/>
-                {displayError(yearError)}
             </View>
             <View style={styles.bottom}>
                 <View style={styles.progress}>
@@ -170,7 +148,7 @@ const AddProfile = (props: AddProfileProps) => {
                 </View>
                 <Pressable style={[styles.button, {
                     backgroundColor: (nextPressed ? Theme.greyColor() : Theme.mainColor())
-                }]} onPress={register} onPressIn={(_) => setNextPressed(true)} onPressOut={(_) => setNextPressed(false)}>
+                }]} onPress={register} onPressIn={(_) => setNextPressed(true)}>
                     <Text style={styles.buttonText}>Next</Text>
                 </Pressable>
             </View>
