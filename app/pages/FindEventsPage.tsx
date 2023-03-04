@@ -1,12 +1,13 @@
 import { useFonts } from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View, Text, TextInput } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View, Text, TextInput, Button, Alert } from 'react-native';
 import { Theme } from './Theme';
 import { FindEventsProps } from '../types/PropTypes';
 
 const FindEventsPage = (props: FindEventsProps) => {
     const [following, setFollowing] = useState(false);
+    const [selectedButton, setSelectedButton] = useState('All');
 
     const [fontsLoaded] = useFonts({
         Inter: require('../assets/fonts/Inter-Regular.otf'),
@@ -19,21 +20,42 @@ const FindEventsPage = (props: FindEventsProps) => {
 
     return (
         <View style={styles.background}>
-            {/* "All", "Following" buttons row */}
+            <View style={{ flexDirection:"row" }}>
+                <Button
+                title="All"
+                color={selectedButton === 'All' ? '#000000' : '#cccccc'}
+                onPress={() => Alert.alert('Simple Button pressed')}
+                />
+                <View style={styles.buttonSpace} />
+                <Button
+                title="Following"
+                color={selectedButton === 'Following' ? '#ffffff' : '#cccccc'}
+                onPress={() => Alert.alert('Simple Button pressed')}
+                />
+                <View style={styles.buttonSpace} />
+                <Button
+                title="Explore"
+                color={selectedButton === 'Explore' ? '#ffffff' : '#cccccc'}
+                onPress={() => Alert.alert('Simple Button pressed')}
+                />
+            </View>
             <View></View>
             {/* Search bar */}
-            <View></View>
+            <View style={styles.search}>
+                <Ionicons name="search-sharp" size={18} color={Theme.mainColor()} style={styles.searchIcon}/>
+                <TextInput style={styles.searchText} placeholder="Search" placeholderTextColor={Theme.greyColor()}/>
+            </View>
             {/* Happening today */}
-            <View>
-                <Text>Happening today</Text>
+            <View style={styles.container}>
+                <Text style={styles.headerText}>Happening today</Text>
                 {/* Horizontal scrolling box of events happening today */}
                 <ScrollView horizontal={true}>
                     
                 </ScrollView>
             </View>
             {/* Upcoming */}
-            <View>
-                <Text>Upcoming</Text>
+            <View style={styles.container}>
+                <Text style={styles.headerText}>Upcoming</Text>
                 {/* Vertical scrolling box of upcoming events */}
                 <ScrollView></ScrollView>
             </View>
@@ -46,7 +68,43 @@ const styles = StyleSheet.create({
         backgroundColor: Theme.lightColor(),
         flexDirection: "column",
         justifyContent: "center",
+        width: "100%",
+        height: "100%",
     },
+    container: {
+        marginLeft: 10,
+    },
+    headerText: {
+        fontFamily: "InterBold",
+        fontSize: 16,
+        color: Theme.darkColor(),
+    },
+    search: {
+        alignSelf: 'center',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignContent: 'center',
+        backgroundColor: "#ffffff",
+        width: "90%",
+        height: 35,
+        borderRadius: 35/2,
+    },
+    searchText: {
+        fontFamily: "Inter",
+        fontSize: 14,
+        width: "86%",
+        marginLeft: "2%",
+    },
+    searchIcon: {
+        alignSelf: 'center',
+        marginLeft: "2%",
+        width: 20,
+        height: 20,
+    },
+    buttonSpace: {
+        width: 20, // can be tweaked
+        height: 20,
+    }
 });
 
 export default FindEventsPage;
