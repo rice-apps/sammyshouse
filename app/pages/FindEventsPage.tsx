@@ -9,7 +9,7 @@ const FindEventsPage = (props: FindEventsProps) => {
     const [following, setFollowing] = useState(false);
     const [searchFilter, setSearchFilter] = useState<string>(undefined);
     const [selectedButton, setSelectedButton] = useState('All');
-
+    
     const [fontsLoaded] = useFonts({
         Inter: require('../assets/fonts/Inter-Regular.otf'),
         InterBold: require('../assets/fonts/Inter-Bold.otf'),
@@ -30,23 +30,15 @@ const FindEventsPage = (props: FindEventsProps) => {
     return (
         <View style={styles.background}>
             <View style={{ flexDirection:"row" }}>
-                <Button
-                title="All"
-                color={selectedButton === 'All' ? '#000000' : '#cccccc'}
-                onPress={() => Alert.alert('Simple Button pressed')}
-                />
                 <View style={styles.buttonSpace} />
-                <Button
-                title="Following"
-                color={selectedButton === 'Following' ? '#ffffff' : '#cccccc'}
-                onPress={() => Alert.alert('Simple Button pressed')}
-                />
+                <Pressable style={styles.button} onPress={useState}>
+                    <Text style={styles.text}> All </Text>
+                </Pressable>
                 <View style={styles.buttonSpace} />
-                <Button
-                title="Explore"
-                color={selectedButton === 'Explore' ? '#ffffff' : '#cccccc'}
-                onPress={() => Alert.alert('Simple Button pressed')}
-                />
+                <Pressable style={styles.button} onPress={useState}>
+                    <Text style={styles.text}> Following </Text>
+                </Pressable>
+                <View style={styles.buttonSpace} />
             </View>
             <View></View>
             {/* Search bar */}
@@ -110,6 +102,22 @@ const styles = StyleSheet.create({
         marginLeft: "2%",
         width: 20,
         height: 20,
+    },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        paddingVertical: 12,
+        paddingHorizontal: 10,
+        borderRadius: 4,
+        elevation: 3,
+        backgroundColor: 'black',
+      },
+    text: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: 'white',
     },
     buttonSpace: {
         width: 20, // can be tweaked
