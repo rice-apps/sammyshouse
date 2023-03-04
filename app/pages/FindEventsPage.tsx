@@ -7,12 +7,21 @@ import { FindEventsProps } from '../types/PropTypes';
 
 const FindEventsPage = (props: FindEventsProps) => {
     const [following, setFollowing] = useState(false);
+    const [searchFilter, setSearchFilter] = useState<string>(undefined);
     const [selectedButton, setSelectedButton] = useState('All');
 
     const [fontsLoaded] = useFonts({
         Inter: require('../assets/fonts/Inter-Regular.otf'),
         InterBold: require('../assets/fonts/Inter-Bold.otf'),
     });
+
+    const searchHandler = (text: string) => {
+        if (text.length == 0) {
+            setSearchFilter(undefined);
+        } else {
+            setSearchFilter(text);
+        }
+    };
 
     if (!fontsLoaded) {
         return null;
@@ -43,7 +52,8 @@ const FindEventsPage = (props: FindEventsProps) => {
             {/* Search bar */}
             <View style={styles.search}>
                 <Ionicons name="search-sharp" size={18} color={Theme.mainColor()} style={styles.searchIcon}/>
-                <TextInput style={styles.searchText} placeholder="Search" placeholderTextColor={Theme.greyColor()}/>
+                <TextInput style={styles.searchText} placeholder="Search" placeholderTextColor={Theme.greyColor()}
+                    onChangeText={searchHandler}/>
             </View>
             {/* Happening today */}
             <View style={styles.container}>
