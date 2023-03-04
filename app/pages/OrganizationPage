@@ -1,0 +1,77 @@
+import React, { Component, FC, useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { Button, Stack, TextArea, Divider, Flex, Box, Avatar, HStack, ScrollView, VStack, Center, Heading, IconButton, NativeBaseProvider} from "native-base";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+
+// Add the header. 
+
+const OrganizationPage = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}> ORGANIZATION NAME </Text>
+      <HStack justifyContent="center" space={2}>
+        <Avatar bg="green.500" source={{uri: "https://picsum.photos/700"}} />
+      </HStack>
+      <Button onPress={() => console.log("test")} mt={2}>follow</Button> {}
+      <Stack mt = {2} space={2.5} w="95%" maxW="300">
+        <Box>
+          <TextArea aria-label="t1Disabled" placeholder="BIO BIO BIO" isDisabled />
+        </Box>
+      </Stack>
+      <HStack mt={2}>
+        <IconButton
+          icon={<MaterialCommunityIcons name="instagram" size={24} color="black" />}
+          onPress={() => console.log("Instagram button pressed")}
+          variant="unstyled"
+        />
+        <IconButton
+          icon={<MaterialCommunityIcons name="earth" size={24} color="black" />}
+          onPress={() => console.log("Earth button pressed")}
+          variant="unstyled"
+        />
+        <Button onPress={() => console.log("test")} m={2}>Email</Button> {}
+        <Button onPress={() => console.log("test")} m={2}>See Admins</Button> {}
+      </HStack>
+      <Center mt={4} mb={2}>
+        <HStack space={2}>
+          <Heading fontSize="xl">Events</Heading>
+        </HStack>
+      </Center>
+      <ScrollView horizontal={true} w={["300", "300"]} h="80" mt={2}>
+        <HStack space={4}>
+          <Center w="20" h="20" bg="indigo.300" rounded="md" shadow={3} text="placeholder" />
+          <Center w="20" h="20" bg="indigo.500" rounded="md" shadow={3} />
+          <Center w="20" h="20" bg="indigo.700" rounded="md" shadow={3} />
+          <Center w="20" h="20" bg="indigo.300" rounded="md" shadow={3} />
+          <Center w="20" h="20" bg="indigo.300" rounded="md" shadow={3} />
+        </HStack>
+      </ScrollView>
+    </View>
+  );
+};
+
+export default () => {
+  return (
+    <NativeBaseProvider>
+      <Center flex={1} px="3">
+        <OrganizationPage />
+      </Center>
+    </NativeBaseProvider>
+    );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 16, // Add some margin bottom to the text
+  },
+});
+    
