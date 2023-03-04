@@ -1,14 +1,24 @@
+import { useFonts } from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { Pressable, ScrollView, View, Text, TextInput } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View, Text, TextInput } from 'react-native';
+import { Theme } from './Theme';
+import { FindEventsProps } from '../types/PropTypes';
 
-const FindEventsPage = (props: {
-
-}) => {
+const FindEventsPage = (props: FindEventsProps) => {
     const [following, setFollowing] = useState(false);
 
+    const [fontsLoaded] = useFonts({
+        Inter: require('../assets/fonts/Inter-Regular.otf'),
+        InterBold: require('../assets/fonts/Inter-Bold.otf'),
+    });
+
+    if (!fontsLoaded) {
+        return null;
+    }
+
     return (
-        <View>
+        <View style={styles.background}>
             {/* "All", "Following" buttons row */}
             <View></View>
             {/* Search bar */}
@@ -17,7 +27,9 @@ const FindEventsPage = (props: {
             <View>
                 <Text>Happening today</Text>
                 {/* Horizontal scrolling box of events happening today */}
-                <ScrollView></ScrollView>
+                <ScrollView horizontal={true}>
+                    
+                </ScrollView>
             </View>
             {/* Upcoming */}
             <View>
@@ -28,5 +40,13 @@ const FindEventsPage = (props: {
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    background: {
+        backgroundColor: Theme.lightColor(),
+        flexDirection: "column",
+        justifyContent: "center",
+    },
+});
 
 export default FindEventsPage;
