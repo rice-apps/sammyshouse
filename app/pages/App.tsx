@@ -9,6 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AddEvent from './AddEventPage';
 import EventPage from './EventPage';
+import FindEventsPage from './FindEventsPage';
 
 
 const Stack = createNativeStackNavigator();
@@ -57,6 +58,10 @@ function Home({ navigation }) {
         title="Event Page"
         onPress={() => navigation.navigate('Event Page')}
       />
+      <Button
+        title="Find Events Page"
+        onPress={() => navigation.navigate('Find Events Page')}
+      />
       <StatusBar style="auto" />
     </View>
   );
@@ -83,6 +88,7 @@ export default function App() {
         <Stack.Screen name="Add Profile" component={AddProfile}/>
         <Stack.Screen name="Add Event" component={AddEvent}/>
         <Stack.Screen name="Event Page" component={EventPage}/>
+        <Stack.Screen name="Find Events Page" component={FindEventsPage}/>
 
       </Stack.Navigator>
     </NavigationContainer>
