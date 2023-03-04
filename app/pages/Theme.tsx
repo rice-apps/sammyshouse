@@ -5,6 +5,10 @@ const Theme = {
     darkGrey: "#82899C",
     darkBlue: "#26356A",
     mediumBlue: "#5C76B9",
+    lightBlue: "#EFF3F4",
+    lightColor: function() {
+        return this.lightBlue;
+    },
     mainColor: function() {
         return this.mediumBlue;
     },
@@ -20,6 +24,9 @@ const Theme = {
 }
 
 const Styles = StyleSheet.create({
+    lightColor: {
+        color: Theme.lightColor(),
+    },
     mainColor: {
         color: Theme.mainColor(),
     },
