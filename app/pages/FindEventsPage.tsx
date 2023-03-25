@@ -4,11 +4,11 @@ import React, { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View, Text, TextInput, Button, Alert } from 'react-native';
 import { Theme } from './Theme';
 import { FindEventsProps } from '../types/PropTypes';
+import UpcomingEvent from '../components/UpcomingEvent';
 
 const FindEventsPage = (props: FindEventsProps) => {
     const [following, setFollowing] = useState(false);
     const [searchFilter, setSearchFilter] = useState<string>(undefined);
-    const [selectedButton, setSelectedButton] = useState('All');
     
     const [fontsLoaded] = useFonts({
         Inter: require('../assets/fonts/Inter-Regular.otf'),
@@ -30,15 +30,24 @@ const FindEventsPage = (props: FindEventsProps) => {
     return (
         <View style={styles.background}>
             <View style={{ flexDirection:"row" }}>
-                <View style={styles.buttonSpace} />
-                <Pressable style={styles.button} onPress={useState}>
-                    <Text style={styles.text}> All </Text>
-                </Pressable>
-                <View style={styles.buttonSpace} />
-                <Pressable style={styles.button} onPress={useState}>
-                    <Text style={styles.text}> Following </Text>
-                </Pressable>
-                <View style={styles.buttonSpace} />
+                <View style={styles.buttonSpace}>
+                    <Pressable style={[styles.button, {
+                        backgroundColor: following ? 'transparent' : Theme.mainColor()
+                    }]} onPress={() => setFollowing(false)}>
+                        <Text style={[styles.buttonText, {
+                            color: following ? Theme.mainColor() : 'white',
+                            fontWeight: following ? 'normal' : 'bold'
+                        }]}>All</Text>
+                    </Pressable>
+                    <Pressable style={[styles.button, {
+                        backgroundColor: following ? Theme.mainColor() : 'transparent'
+                    }]} onPress={() => setFollowing(true)}>
+                        <Text style={[styles.buttonText, {
+                            color: following ? 'white' : Theme.mainColor(),
+                            fontWeight: following ? 'bold' : 'normal'
+                        }]}>Following</Text>
+                    </Pressable>
+                </View>
             </View>
             <View></View>
             {/* Search bar */}
@@ -104,24 +113,21 @@ const styles = StyleSheet.create({
         height: 20,
     },
     button: {
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        paddingVertical: 12,
-        paddingHorizontal: 10,
-        borderRadius: 4,
+        paddingVertical: 7,
+        paddingHorizontal: 17,
+        borderRadius: 10,
         elevation: 3,
-        backgroundColor: 'black',
-      },
-    text: {
+    },
+    buttonText: {
         fontSize: 16,
         lineHeight: 21,
-        fontWeight: 'bold',
         letterSpacing: 0.25,
-        color: 'white',
     },
     buttonSpace: {
-        width: 20, // can be tweaked
-        height: 20,
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center'
     }
 });
 
