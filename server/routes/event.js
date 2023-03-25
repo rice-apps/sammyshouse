@@ -35,6 +35,45 @@ router.get('/getAllEvents', async (req, res) => {
     }
 });
 
+// Get events, possibly filtered by date (today or upcoming),
+// name, and TODO: whether the poster is followed by a given user
+router.get('/getEvents', async (req, res) => {
+    try {
+        // TODO: followed by user
+        const exactDate = req.body.exactDate; // boolean
+        var date = req.body.date; // Date
+        var nextDay;
+        const nameFilter = req.body.nameFilter; // string
+        if (date) {
+            date = new Date(date);
+            nextDay = new Date(date);
+            nextDay.setUTCDate(date.getUTCDate() + 1);
+        }
+        const query = {
+            ...(nameFilter && {
+                $text: {
+                    $search: nameFilter
+                },
+            }),
+            ...(date && exactDate && {
+                date: {
+                    $gte: date,
+                    $lt: nextDay,
+                }
+            }),
+            ...(date && !exactDate && {
+                date: {
+                    $gte: date
+                }
+            })
+        };
+        const data = await Event.find(query);
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // Get events by tags
 router.get('/getEventsByTags/:tags', async (req, res) => {
     try {
