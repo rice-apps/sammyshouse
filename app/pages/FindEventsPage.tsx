@@ -100,14 +100,14 @@ const FindEventsPage = (props: FindEventsProps) => {
                 </SafeAreaView>
             </View>
             {/* Upcoming */}
-            <View style={styles.container}>
-                <Text style={styles.headerText}>Upcoming</Text>
-                {/* Vertical scrolling box of upcoming events */}
+            <Text style={[styles.headerText, {marginLeft: 10, marginBottom: 10}]}>Upcoming</Text>
+            {/* Vertical scrolling box of upcoming events */}
+            <View style={styles.upcoming}>
                 <FlatList data={events} renderItem={({item}) => eventCardFromData(
                     item,
                     (id) => console.log(`Event ${id} pressed`),
                     (id, liked) => console.log(`Event ${id} is now ${liked ? '' : 'not '}liked`)
-                )}/>
+                )} ItemSeparatorComponent={() => <View style={{height: 10}}></View>}/>
             </View>
         </View>
     );
@@ -161,6 +161,9 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-around',
+        alignItems: 'center'
+    },
+    upcoming: {
         alignItems: 'center'
     }
 });
