@@ -1,10 +1,10 @@
 import { useFonts } from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View, Text, TextInput, Button, Alert } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View, Text, TextInput, SafeAreaView} from 'react-native';
 import { Theme } from './Theme';
 import { FindEventsProps } from '../types/PropTypes';
-import UpcomingEvent from '../components/UpcomingEvent';
+import HappeningToday from '../components/HappeningToday';
 
 const FindEventsPage = (props: FindEventsProps) => {
     const [following, setFollowing] = useState(false);
@@ -34,18 +34,20 @@ const FindEventsPage = (props: FindEventsProps) => {
                     <Pressable style={[styles.button, {
                         backgroundColor: following ? 'transparent' : Theme.mainColor()
                     }]} onPress={() => setFollowing(false)}>
-                        <Text style={[styles.buttonText, {
+                        <Text style={{
+                            fontSize: 16,
+                            fontFamily: following ? 'Inter' : 'InterBold',
                             color: following ? Theme.mainColor() : 'white',
-                            fontWeight: following ? 'normal' : 'bold'
-                        }]}>All</Text>
+                        }}>All</Text>
                     </Pressable>
                     <Pressable style={[styles.button, {
                         backgroundColor: following ? Theme.mainColor() : 'transparent'
                     }]} onPress={() => setFollowing(true)}>
-                        <Text style={[styles.buttonText, {
+                        <Text style={{
+                            fontSize: 16,
+                            fontFamily: following ? 'InterBold' : 'Inter',
                             color: following ? 'white' : Theme.mainColor(),
-                            fontWeight: following ? 'bold' : 'normal'
-                        }]}>Following</Text>
+                        }}>Following</Text>
                     </Pressable>
                 </View>
             </View>
@@ -68,7 +70,20 @@ const FindEventsPage = (props: FindEventsProps) => {
             <View style={styles.container}>
                 <Text style={styles.headerText}>Upcoming</Text>
                 {/* Vertical scrolling box of upcoming events */}
-                <ScrollView></ScrollView>
+                <SafeAreaView style={styles.container}>
+                    <ScrollView>
+                    <UpcomingEvent
+                        imageUrl="////"
+                        title="Event title"
+                        description="by ..."
+                    />
+                    <UpcomingEvent
+                        imageUrl="////"
+                        title="Event title"
+                        description="by ..."
+                    />  
+                    </ScrollView>
+                </SafeAreaView>
             </View>
         </View>
     );
@@ -117,11 +132,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 17,
         borderRadius: 10,
         elevation: 3,
-    },
-    buttonText: {
-        fontSize: 16,
-        lineHeight: 21,
-        letterSpacing: 0.25,
     },
     buttonSpace: {
         width: '100%',
