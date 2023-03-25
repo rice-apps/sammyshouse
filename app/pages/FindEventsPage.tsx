@@ -1,19 +1,47 @@
 import { useFonts } from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View, Text, TextInput, SafeAreaView} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Pressable, StyleSheet, View, Text, TextInput, SafeAreaView} from 'react-native';
 import { Theme } from './Theme';
+import IEvent, { IEventIntermediate } from '../types/IEvent';
 import { FindEventsProps } from '../types/PropTypes';
-import HappeningToday from '../components/HappeningToday';
+import { parseEvent, eventCardFromData } from '../components/event/EventCard';
+import { convertAbsoluteToRem } from 'native-base/lib/typescript/theme/tools';
+import { happeningTodayEventFromData } from '../components/event/HappeningTodayEvent';
+
+const server = "http://localhost:3000";
 
 const FindEventsPage = (props: FindEventsProps) => {
+    /*
+     * TODO: go back to server-side, get only upcoming events (?),
+     * get only events today (?), filtered by string (?), and
+     * filtered by usering following (?)
+     */
     const [following, setFollowing] = useState(false);
     const [searchFilter, setSearchFilter] = useState<string>(undefined);
+    const [events, setEvents] = useState<IEvent[]>([]);
     
     const [fontsLoaded] = useFonts({
         Inter: require('../assets/fonts/Inter-Regular.otf'),
         InterBold: require('../assets/fonts/Inter-Bold.otf'),
     });
+
+    /*
+     * TODO: fix fetch to be based on updated backend queries
+     * and then update the dependencies list to match, e.g.
+     * [following, searchFilter].
+     */
+    useEffect(() => {
+        fetch(`${server}/api/events/getAllEvents`)
+          .then(res => res.json())
+          .then((json: IEventIntermediate[]) => {
+            setEvents(json.map(parseEvent));
+            console.log("Got events successfully!");
+          })
+          .catch(err => {
+            console.log(`Error fetching events: ${err}`);
+          });
+    }, []);
 
     const searchHandler = (text: string) => {
         if (text.length == 0) {
@@ -62,28 +90,24 @@ const FindEventsPage = (props: FindEventsProps) => {
             <View style={styles.container}>
                 <Text style={styles.headerText}>Happening today</Text>
                 {/* Horizontal scrolling box of events happening today */}
-                <ScrollView horizontal={true}>
-                    
-                </ScrollView>
+                <SafeAreaView style={styles.container}>
+                    <FlatList data={events} horizontal={true} renderItem={({item}) => happeningTodayEventFromData(
+                        item,
+                        (id) => console.log(`Happening today event ${id} was pressed`),
+                        (id, liked) => console.log(`Happening today event ${id} is now ${liked ? '' : 'not '}liked`)
+                    )}/>
+
+                </SafeAreaView>
             </View>
             {/* Upcoming */}
             <View style={styles.container}>
                 <Text style={styles.headerText}>Upcoming</Text>
                 {/* Vertical scrolling box of upcoming events */}
-                <SafeAreaView style={styles.container}>
-                    <ScrollView>
-                    <UpcomingEvent
-                        imageUrl="////"
-                        title="Event title"
-                        description="by ..."
-                    />
-                    <UpcomingEvent
-                        imageUrl="////"
-                        title="Event title"
-                        description="by ..."
-                    />  
-                    </ScrollView>
-                </SafeAreaView>
+                <FlatList data={events} renderItem={({item}) => eventCardFromData(
+                    item,
+                    (id) => console.log(`Event ${id} pressed`),
+                    (id, liked) => console.log(`Event ${id} is now ${liked ? '' : 'not '}liked`)
+                )}/>
             </View>
         </View>
     );

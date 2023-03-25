@@ -12,8 +12,18 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: 'white',
         borderRadius: 10,
-        width: '90%',
-        height: '20%',
+        /*
+         * TODO: volatile! Fix these to appropriate dimensions.
+         * They were originally relative, as we thought that the cards
+         * would just be immediate children of a view that took up the
+         * entire screen, but they turn out to be children of a FlatList
+         * or ScrollView that doesn't take up the whole screen, so they
+         * can't be relative. These were calculated based on the web
+         * renderer I was viewing the pages in, so they're perhaps not
+         * actually good values.
+         */
+        width: 338, // '90%',
+        height: 133, // '20%',
         justifyContent: 'center',
         alignItems: 'center'
     },
