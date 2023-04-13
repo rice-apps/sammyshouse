@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
          * renderer I was viewing the pages in, so they're perhaps not
          * actually good values.
          */
-        width: 338, // '90%',
-        height: 133, // '20%',
+        width: 300, // '90%',
+        height: 200, // '20%',
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         height: '50%'
     },
     info: {
-        height: '90%',
+        width: '90%',
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     mainImage: {
         width: '100%',
         height: '100%',
-        borderRadius: 10
+        borderRadius: 5
     },
     big: {
         fontSize: 18,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Inter'
     },
     iconGroup: {
-        width: '100%',
+        height: '100%',
         flexDirection: 'row',
         overflow: 'hidden'
     },
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignContent: 'flex-end',
         justifyContent: 'space-between',
-        height: '72%'
+        width: '72%'
     }
 });
 
