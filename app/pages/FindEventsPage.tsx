@@ -15,7 +15,7 @@ const FindEventsPage = (props: FindEventsProps) => {
     /*
      * TODO: go back to server-side, get only upcoming events (?),
      * get only events today (?), filtered by string (?), and
-     * filtered by usering following (?)
+     * filtered by user following (?)
      */
     const [following, setFollowing] = useState(false);
     const [searchFilter, setSearchFilter] = useState<string>(undefined);
@@ -58,7 +58,7 @@ const FindEventsPage = (props: FindEventsProps) => {
     return (
         <View style={styles.background}>
             <View style={{ flexDirection:"row" }}>
-                <View style={styles.buttonSpace}>
+                <View style={[styles.buttonSpace, styles.verticalSpacing]}>
                     <Pressable style={[styles.button, {
                         backgroundColor: following ? 'transparent' : Theme.mainColor()
                     }]} onPress={() => setFollowing(false)}>
@@ -87,7 +87,7 @@ const FindEventsPage = (props: FindEventsProps) => {
                     onChangeText={searchHandler}/>
             </View>
             {/* Happening today */}
-            <View style={styles.container}>
+            <View style={[styles.container, styles.verticalSpacing]}>
                 <Text style={styles.headerText}>Happening today</Text>
                 {/* Horizontal scrolling box of events happening today */}
                 <SafeAreaView style={styles.container}>
@@ -124,6 +124,9 @@ const styles = StyleSheet.create({
     container: {
         marginLeft: 10,
     },
+    verticalSpacing: {
+        paddingBottom: 10,
+    },
     headerText: {
         fontFamily: "InterBold",
         fontSize: 16,
@@ -138,6 +141,7 @@ const styles = StyleSheet.create({
         width: "90%",
         height: 35,
         borderRadius: 35/2,
+        marginBottom: 10,
     },
     searchText: {
         fontFamily: "Inter",
@@ -158,6 +162,7 @@ const styles = StyleSheet.create({
         elevation: 3,
     },
     buttonSpace: {
+        paddingTop: 30,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-around',
