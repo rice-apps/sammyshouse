@@ -24,23 +24,35 @@ const styles = StyleSheet.create({
          */
         width: 300, // '90%',
         height: 200, // '20%',
-        justifyContent: 'center',
         alignItems: 'center'
     },
+    mainImage: {
+        width: '100%',
+        height: '60%',
+        borderRadius: 5
+    },
     inner: {
-        width: "90%",
-        height: "90%",
-        justifyContent: 'flex-end',
+        width: "95%",
+        height: "35%",
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
+        paddingTop: 5,
     },
     leftSide: {
+        height: '100%',
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        height: '50%'
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        flexGrow: 1,
+    },
+    rightSide: {
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        alignContent: 'flex-end',
     },
     info: {
-        width: '90%',
+        width: '100%',
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
@@ -51,37 +63,22 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-end'
     },
-    mainImage: {
-        width: '100%',
-        height: '100%',
-        borderRadius: 5
-    },
     big: {
-        fontSize: 18,
+        fontSize: 16,
     },
     bold: {
         fontFamily: 'InterBold'
     },
     inter: {
-        fontFamily: 'Inter'
-    },
-    iconGroup: {
-        height: '100%',
-        flexDirection: 'row',
-        overflow: 'hidden'
+        fontFamily: 'Inter',
+        fontSize: 11,
     },
     marginRight: {
-        marginRight: '10%'
+        marginRight: 10
     },
     row: {
         flexDirection: 'row'
     },
-    rightSide: {
-        flexDirection: 'column',
-        alignContent: 'flex-end',
-        justifyContent: 'space-between',
-        width: '72%'
-    }
 });
 
 const HappeningTodayEvent = (props: {
@@ -119,45 +116,48 @@ const HappeningTodayEvent = (props: {
 
   return (
       <TouchableOpacity style={styles.card} onPress={() => props.onPress(props.data.eventId)}>
+          {mainImage}
           <View style={styles.inner}>
               <View style={styles.leftSide}>
-                  {mainImage}
                   <View style={styles.info}>
-                      <View style={{width: '100%', height: '40%', justifyContent: 'space-between'}}>
-                          <Text style={[styles.bold, styles.big]}>{props.data.eventName}</Text>
+                      <View style={{height: '40%', justifyContent: 'space-between'}}>
+                          <Text 
+                            style={[styles.bold, styles.big, {width: '100%'}]}>{props.data.eventName}</Text>
                           <View style={styles.row}>
                               <Text style={styles.inter}>by </Text>
-                              <Text style={styles.bold}>{props.data.postedBy}</Text>
+                              <Text style={[styles.bold, {fontSize: 11}]}>{props.data.postedBy}</Text>
                           </View>
                       </View>
-                      <View style={{width:'100%', height: '35%', justifyContent: 'space-between'}}>
-                          <View style={styles.iconGroup}>
-                              <FontAwesome5 name="clock" size={15} color="black" style={styles.marginRight}/>
-                              <Text style={styles.inter}>{time}</Text>
+                      <View style={{width: "100%"}}>
+                          <View style={styles.row}>
+                              <FontAwesome5 name="clock" size={11} color="black" style={styles.marginRight}/>
+                              <Text numberOfLines={1} style={styles.inter}>{time}</Text>
                           </View>
-                          <View style={styles.iconGroup}>
-                              <Ionicons name="location-sharp" size={15} color="black" style={styles.marginRight}/>
+                          <View style={styles.row}>
+                              <Ionicons name="location-sharp" size={11} color="black" style={styles.marginRight}/>
                               <Text numberOfLines={1} style={styles.inter}>{location}</Text>
                           </View>
                       </View>
                   </View>
               </View>
               <View style={styles.rightSide}>
-                  <View style={styles.dateInfo}>
-                      <View style={{alignItems: 'flex-end'}}>
-                          <Text style={styles.bold}>{weekday}</Text>
-                          <Text style={styles.inter}>{month}</Text>
-                          <Text style={[styles.inter, styles.big]}>{dayOfMonth}</Text>
+                  <View style={[styles.row, {alignItems: 'flex-end'}]}>
+                      <TouchableWithoutFeedback style={{marginRight: 10}} onPress={() => {
+                          if (props.onLike !== undefined) {
+                              props.onLike(props.data.eventId, !liked);
+                          }
+                          setLiked(!liked);
+                      }}>
+                          {likeIcon}
+                      </TouchableWithoutFeedback>
+                      <View style={styles.dateInfo}>
+                          <View style={{alignItems: 'flex-end'}}>
+                              <Text style={styles.bold}>{weekday}</Text>
+                              <Text style={styles.inter}>{month}</Text>
+                              <Text style={[styles.inter, styles.big]}>{dayOfMonth}</Text>
+                          </View>
                       </View>
                   </View>
-                  <TouchableWithoutFeedback onPress={() => {
-                      if (props.onLike !== undefined) {
-                          props.onLike(props.data.eventId, !liked);
-                      }
-                      setLiked(!liked);
-                  }}>
-                      {likeIcon}
-                  </TouchableWithoutFeedback>
               </View>
           </View>
       </TouchableOpacity>
