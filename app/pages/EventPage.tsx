@@ -7,8 +7,6 @@ import { Badge } from 'react-native-paper';
 import { Avatar } from 'react-native-paper';
 import { brotliDecompress } from 'zlib';
 
-// need to add functionality to commands, just placeholders for now. 
-
 export default function EventPage() {
 
   const [text, setText] = React.useState("");
@@ -39,8 +37,8 @@ export default function EventPage() {
       </Card>
       <Appbar.Header>
       <Appbar.BackAction onPress={_goBack} />
-      <Appbar.Content title="Hosted by xxxx"/>
-      <Text variant="titleSmall" > freeeee </Text>
+      <Appbar.Content title="Hosted by Person"/>
+      <Text variant="titleSmall" > Price </Text>
       <Appbar.Action icon="heart" onPress={_handleMore} />
       </Appbar.Header>
     <View style={styles.container}>
@@ -51,7 +49,7 @@ export default function EventPage() {
       <Button icon="map-marker" mode="text">
       Location
       </Button>
-      <Text variant="bodyMedium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptas itaque eligendi sint vero deleniti repudiandae, nisi tempora non quo nesciunt dolor placeat saepe natus laboriosam quis expedita nostrum. Harum? </Text>
+      <Text variant="bodyMedium" style={{ color: 'black' }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptas itaque eligendi sint vero deleniti repudiandae, nisi tempora non quo nesciunt dolor placeat saepe natus laboriosam quis expedita nostrum. </Text>
     </View>
     <View style={styles.container}>
       <Text variant="displayMedium" style={styles.eventName}>Tags</Text>
@@ -74,11 +72,14 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     margin: 30, 
+    color: 'black', // Add this line to change the text color
   },
 
   eventName: {
-    fontSize : 20,
-    fontWeight: 'bold', 
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 40,
+    color: 'black', // Add this line to change the text color
   }
 });
 
@@ -88,5 +89,6 @@ const textStyles = StyleSheet.create({
     margin: 12,
     borderWidth: 3,
     padding:10,
+    color: 'black', // Add this line to change the text color
   },
 });
