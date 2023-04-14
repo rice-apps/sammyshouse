@@ -90,12 +90,13 @@ const FindEventsPage = (props: FindEventsProps) => {
             <View style={[styles.container, styles.verticalSpacing]}>
                 <Text style={styles.headerText}>Happening today</Text>
                 {/* Horizontal scrolling box of events happening today */}
-                <SafeAreaView style={styles.container}>
+                <SafeAreaView> 
                     <FlatList data={events} horizontal={true} renderItem={({item}) => happeningTodayEventFromData(
                         item,
                         (id) => console.log(`Happening today event ${id} was pressed`),
                         (id, liked) => console.log(`Happening today event ${id} is now ${liked ? '' : 'not '}liked`)
-                    )}/>
+                    )} ItemSeparatorComponent={() => <View style={{width: 10}}></View>}
+                    ListFooterComponent={() => <View style={{width: 10}}></View>}/>
 
                 </SafeAreaView>
             </View>
@@ -107,7 +108,8 @@ const FindEventsPage = (props: FindEventsProps) => {
                     item,
                     (id) => console.log(`Event ${id} pressed`),
                     (id, liked) => console.log(`Event ${id} is now ${liked ? '' : 'not '}liked`)
-                )} ItemSeparatorComponent={() => <View style={{height: 10}}></View>}/>
+                )} ItemSeparatorComponent={() => <View style={{height: 10}}></View>}
+                ListFooterComponent={() => <View style={{height: 10}}></View>}/>
             </View>
         </View>
     );
