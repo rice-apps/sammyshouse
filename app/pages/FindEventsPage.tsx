@@ -57,29 +57,26 @@ const FindEventsPage = (props: FindEventsProps) => {
 
     return (
         <View style={styles.background}>
-            <View style={{ flexDirection:"row" }}>
-                <View style={[styles.buttonSpace, styles.verticalSpacing]}>
-                    <Pressable style={[styles.button, {
-                        backgroundColor: following ? 'transparent' : Theme.mainColor()
-                    }]} onPress={() => setFollowing(false)}>
-                        <Text style={{
-                            fontSize: 16,
-                            fontFamily: following ? 'Inter' : 'InterBold',
-                            color: following ? Theme.mainColor() : 'white',
-                        }}>All</Text>
-                    </Pressable>
-                    <Pressable style={[styles.button, {
-                        backgroundColor: following ? Theme.mainColor() : 'transparent'
-                    }]} onPress={() => setFollowing(true)}>
-                        <Text style={{
-                            fontSize: 16,
-                            fontFamily: following ? 'InterBold' : 'Inter',
-                            color: following ? 'white' : Theme.mainColor(),
-                        }}>Following</Text>
-                    </Pressable>
-                </View>
+            <View style={[styles.buttonSpace, styles.verticalSpacing, {paddingTop: 10}]}>
+                <Pressable style={[styles.button, {
+                    backgroundColor: following ? 'transparent' : Theme.mainColor()
+                }]} onPress={() => setFollowing(false)}>
+                    <Text style={{
+                        fontSize: 16,
+                        fontFamily: following ? 'Inter' : 'InterBold',
+                        color: following ? Theme.mainColor() : 'white',
+                    }}>All</Text>
+                </Pressable>
+                <Pressable style={[styles.button, {
+                    backgroundColor: following ? Theme.mainColor() : 'transparent'
+                }]} onPress={() => setFollowing(true)}>
+                    <Text style={{
+                        fontSize: 16,
+                        fontFamily: following ? 'InterBold' : 'Inter',
+                        color: following ? 'white' : Theme.mainColor(),
+                    }}>Following</Text>
+                </Pressable>
             </View>
-            <View></View>
             {/* Search bar */}
             <View style={styles.search}>
                 <Ionicons name="search-sharp" size={18} color={Theme.mainColor()} style={styles.searchIcon}/>
@@ -88,7 +85,7 @@ const FindEventsPage = (props: FindEventsProps) => {
             </View>
             {/* Happening today */}
             <View style={[styles.container, styles.verticalSpacing]}>
-                <Text style={styles.headerText}>Happening today</Text>
+                <Text style={[styles.headerText, styles.verticalSpacing]}>Happening today</Text>
                 {/* Horizontal scrolling box of events happening today */}
                 <SafeAreaView> 
                     <FlatList data={events} horizontal={true} renderItem={({item}) => happeningTodayEventFromData(
@@ -119,7 +116,6 @@ const styles = StyleSheet.create({
     background: {
         backgroundColor: Theme.lightColor(),
         flexDirection: "column",
-        justifyContent: "center",
         width: "100%",
         height: "100%",
     },
@@ -164,7 +160,6 @@ const styles = StyleSheet.create({
         elevation: 3,
     },
     buttonSpace: {
-        paddingTop: 30,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-around',
